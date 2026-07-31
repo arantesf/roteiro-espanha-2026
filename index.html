@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>España 2026 · Fernando & Daniele</title>
+<style>
+:root{
+  --ink:#22201d;
+  --soft:#6f675d;
+  --line:#e8e2d8;
+  --paper:#ffffff;
+  --cream:#fdfbf7;
+
+  --terracota:#b8472e;
+  --albero:#c8912f;
+  --azul:#1d5b8a;
+  --oliva:#6b7a4a;
+  --mar:#17879b;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.7 "Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
+  padding-bottom:0;
+}
+img{max-width:100%;display:block}
+a{color:var(--azul)}
+
+.wrap{max-width:820px;margin:0 auto;padding:0 22px}
+.serif{font-family:Georgia,"Iowan Old Style","Times New Roman",serif}
+
+/* ---------- ornamento mudéjar ---------- */
+.ornament{
+  height:34px;margin:44px auto;max-width:260px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg fill='none' stroke='%23c8912f' stroke-width='1.1'%3E%3Crect x='9' y='9' width='16' height='16'/%3E%3Crect x='9' y='9' width='16' height='16' transform='rotate(45 17 17)'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:repeat-x;background-position:center;opacity:.85;
+}
+.ornament.tight{margin:26px auto 22px}
+
+/* ---------- capa ---------- */
+.hero{position:relative;overflow:hidden;background:#1a1512}
+.hero img{
+  width:100%;height:clamp(340px,58vh,520px);object-fit:cover;
+  opacity:.72;filter:saturate(1.05);
+}
+.hero-in{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;color:#fff;
+  padding:0 24px;text-shadow:0 2px 22px rgba(0,0,0,.55);
+}
+.hero .kicker{
+  font-size:.74rem;letter-spacing:.42em;text-transform:uppercase;
+  opacity:.9;margin-bottom:16px;padding-left:.42em;
+}
+.hero h1{
+  margin:0;font-size:clamp(2.9rem,12vw,5.2rem);line-height:.94;
+  font-weight:400;letter-spacing:-.02em;
+}
+.hero h1 em{font-style:italic;color:#f0c96a}
+.hero .names{
+  margin-top:18px;font-size:clamp(1rem,3.4vw,1.3rem);letter-spacing:.16em;
+  text-transform:uppercase;opacity:.95;
+}
+.hero .rule{width:60px;height:1px;background:rgba(255,255,255,.55);margin:20px auto}
+.hero .when{font-size:.9rem;letter-spacing:.1em;opacity:.88}
+
+.countdown{
+  background:var(--terracota);color:#fff;text-align:center;
+  padding:15px 20px;font-size:.87rem;letter-spacing:.13em;text-transform:uppercase;
+}
+.countdown b{font-size:1.05rem;letter-spacing:.05em}
+
+/* ---------- navegação ---------- */
+.quicknav{
+  display:flex;flex-wrap:wrap;gap:9px;justify-content:center;
+  padding:30px 0 6px;
+}
+.quicknav a{
+  text-decoration:none;color:var(--soft);border:1px solid var(--line);
+  padding:8px 17px;border-radius:30px;font-size:.83rem;letter-spacing:.07em;
+  text-transform:uppercase;transition:.18s;background:var(--cream);
+}
+.quicknav a:hover{border-color:var(--terracota);color:var(--terracota)}
+
+/* ---------- intro ---------- */
+.intro{text-align:center;padding:14px 0 0}
+.intro p{
+  font-size:1.12rem;line-height:1.85;color:var(--soft);
+  max-width:620px;margin:0 auto;
+}
+.intro .drop::first-letter{
+  font-family:Georgia,serif;font-size:3.4rem;float:left;line-height:.82;
+  padding:6px 12px 0 0;color:var(--terracota);
+}
+
+/* ---------- seção ---------- */
+.section-label{
+  text-align:center;font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--albero);margin-bottom:10px;padding-left:.4em;
+}
+h2.title{
+  font-size:clamp(1.7rem,5.5vw,2.3rem);text-align:center;margin:0 0 8px;
+  font-weight:400;letter-spacing:-.01em;
+}
+.subtitle{text-align:center;color:var(--soft);font-size:.95rem;margin:0 0 30px;font-style:italic}
+
+/* ---------- capa de cidade ---------- */
+.city{margin-top:20px}
+.city-cover{position:relative;overflow:hidden;background:#181410}
+.city-cover img{width:100%;height:clamp(230px,34vh,330px);object-fit:cover;opacity:.78}
+.city-cover .cap{
+  position:absolute;inset:auto 0 0 0;padding:26px 24px 22px;color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.72));
+}
+.city-cover .cap .n{
+  font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;opacity:.85;
+  display:block;margin-bottom:5px;padding-left:.35em;
+}
+.city-cover .cap h3{
+  margin:0;font-size:clamp(1.9rem,7vw,2.8rem);font-weight:400;letter-spacing:-.01em;
+}
+.city-cover .cap .dates{font-size:.86rem;opacity:.9;margin-top:5px;letter-spacing:.06em}
+
+/* ---------- dia ---------- */
+.day{border-bottom:1px solid var(--line)}
+.day:last-of-type{border-bottom:none}
+.day > summary{
+  list-style:none;cursor:pointer;padding:19px 4px;display:flex;
+  gap:15px;align-items:baseline;
+}
+.day > summary::-webkit-details-marker{display:none}
+.day > summary::after{
+  content:"";margin-left:auto;width:8px;height:8px;flex:none;align-self:center;
+  border-right:1.6px solid var(--soft);border-bottom:1.6px solid var(--soft);
+  transform:rotate(45deg);transition:transform .22s;opacity:.6;
+}
+.day[open] > summary::after{transform:rotate(-135deg)}
+.day .dnum{
+  font-family:Georgia,serif;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--terracota);white-space:nowrap;flex:none;width:78px;
+}
+.day .dttl{font-size:1.04rem;font-weight:600}
+.day .body{padding:2px 4px 30px}
+.day .body > p:first-child{margin-top:0}
+
+/* ---------- blocos de transporte / estadia ---------- */
+.leg{
+  display:flex;gap:14px;padding:14px 16px;border-radius:3px;
+  background:var(--cream);border-left:2px solid var(--azul);margin-bottom:11px;
+}
+.leg.air{border-left-color:var(--mar)}
+.leg.car{border-left-color:var(--oliva)}
+.leg .ic{font-size:1.15rem;line-height:1.5;flex:none;opacity:.85}
+.leg .t{font-weight:600;font-size:.97rem}
+.leg .m{color:var(--soft);font-size:.85rem;margin-top:3px;line-height:1.6}
+
+.stay{
+  padding:16px 18px;border:1px solid var(--line);border-top:3px solid var(--albero);
+  margin-bottom:13px;background:var(--cream);
+}
+.stay .lbl{
+  font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--albero);
+  display:block;margin-bottom:5px;
+}
+.stay .t{font-family:Georgia,serif;font-size:1.18rem;line-height:1.3}
+.stay .m{color:var(--soft);font-size:.86rem;margin-top:6px;line-height:1.65}
+
+code{
+  background:#f4efe6;padding:2px 7px;border-radius:3px;
+  font-family:"Consolas",monospace;font-size:.85em;letter-spacing:.05em;color:var(--terracota);
+}
+
+/* ---------- link de documento ---------- */
+.doc{
+  display:inline-flex;align-items:center;gap:7px;margin-top:9px;
+  font-size:.8rem;text-decoration:none;color:var(--azul);
+  border-bottom:1px solid rgba(29,91,138,.3);padding-bottom:1px;
+}
+.doc::before{content:"📄";font-size:.95em}
+.doc:hover{border-bottom-color:var(--azul)}
+.docs{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:6px}
+
+/* ---------- lista de pontos, com horário, foto e mapa ---------- */
+ul.spots{list-style:none;padding:0;margin:16px 0}
+ul.spots li{
+  display:flex;gap:14px;padding:13px 10px 13px 12px;border-bottom:1px dotted var(--line);
+  align-items:flex-start;border-left:3px solid transparent;margin-left:-12px;
+}
+ul.spots li:last-child{border-bottom:none}
+ul.spots li.meal{border-left-color:var(--albero);background:rgba(200,145,47,.07)}
+ul.spots li.activity{border-left-color:var(--azul);background:rgba(29,91,138,.07)}
+ul.spots .time{
+  flex:none;width:50px;padding-top:1px;text-align:right;
+  font-family:Georgia,serif;font-size:.82rem;color:var(--terracota);
+  letter-spacing:.01em;white-space:nowrap;
+}
+ul.spots .time.tbd{color:var(--soft);font-style:italic;font-size:.68rem;text-align:right;line-height:1.5}
+ul.spots .sc{flex:1;min-width:0}
+ul.spots b{font-weight:600}
+ul.spots .d{display:block;color:var(--soft);font-size:.88rem;margin-top:3px}
+.spot-thumb{
+  flex:none;width:82px;height:82px;object-fit:cover;border-radius:4px;
+  border:1px solid var(--line);
+}
+@media (max-width:480px){
+  ul.spots li{gap:10px}
+  ul.spots .time{width:40px;font-size:.74rem}
+  .spot-thumb{width:60px;height:60px}
+}
+
+/* ---------- mapa do item, sob demanda ---------- */
+.spot-media{margin-top:9px}
+.spot-media > summary{
+  list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  font-size:.78rem;color:var(--azul);border-bottom:1px dotted rgba(29,91,138,.45);
+  padding-bottom:1px;
+}
+.spot-media > summary::-webkit-details-marker{display:none}
+.spot-media > summary::before{content:"📍";font-size:.92em}
+.spot-media[open] > summary{margin-bottom:10px;color:var(--terracota);border-bottom-color:rgba(184,71,46,.4)}
+.spot-media-grid{max-width:420px}
+.spot-media-grid iframe{width:100%;height:160px;border:0;border-radius:3px;border:1px solid var(--line)}
+
+.tag{
+  display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:3px 8px;border-radius:2px;vertical-align:2px;
+  margin-left:7px;background:var(--terracota);color:#fff;
+}
+.tag.free{background:var(--oliva)}
+.tag.tip{background:var(--azul)}
+
+/* ---------- foto no corpo ---------- */
+figure{margin:22px 0}
+figure img{width:100%;height:clamp(200px,30vh,280px);object-fit:cover}
+figure.arch{position:relative;padding-top:10px}
+figure.arch img{
+  height:clamp(300px,46vh,420px);
+  border-radius:48% 48% 3px 3px / 34% 34% 3px 3px;
+}
+figure.arch::before{           /* moldura do arco, recuada */
+  content:"";position:absolute;left:14px;right:14px;top:24px;bottom:34px;
+  border:1px solid rgba(200,145,47,.55);
+  border-radius:48% 48% 2px 2px / 34% 34% 2px 2px;
+  pointer-events:none;
+}
+figcaption{
+  font-size:.78rem;color:var(--soft);text-align:center;margin-top:9px;
+  font-style:italic;letter-spacing:.03em;
+}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+.duo img{height:clamp(150px,24vh,210px);object-fit:cover;width:100%}
+@media (max-width:520px){ .duo{grid-template-columns:1fr} }
+
+/* ---------- nota ---------- */
+.note{
+  background:var(--cream);border:1px solid var(--line);border-left:3px solid var(--albero);
+  padding:14px 17px;margin:18px 0;font-size:.91rem;line-height:1.7;
+}
+.note.warn{border-left-color:var(--terracota)}
+.note.good{border-left-color:var(--oliva)}
+.note .h{
+  display:block;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--albero);margin-bottom:5px;font-weight:700;
+}
+.note.warn .h{color:var(--terracota)}
+.note.good .h{color:var(--oliva)}
+
+/* ---------- checklist ---------- */
+.check{list-style:none;padding:0;margin:0}
+.check li{
+  padding:15px 0 15px 34px;border-bottom:1px solid var(--line);position:relative;
+}
+.check li:last-child{border-bottom:none}
+.check li::before{
+  content:"";position:absolute;left:2px;top:19px;width:15px;height:15px;
+  border:1.5px solid var(--terracota);border-radius:2px;
+}
+.check b{font-weight:600}
+.check small{display:block;color:var(--soft);font-size:.85rem;margin-top:3px;line-height:1.6}
+
+/* ---------- tabela ---------- */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:520px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{
+  font-size:.66rem;text-transform:uppercase;letter-spacing:.16em;color:var(--albero);
+  font-weight:700;border-bottom:1.5px solid var(--albero);
+}
+tr:hover td{background:var(--cream)}
+td a{font-size:.85em}
+
+/* ---------- contatos ---------- */
+.contact{border:1px solid var(--line);padding:6px 20px;background:var(--cream);margin:20px 0}
+.contact table{min-width:0}
+.contact td{border-bottom:1px dotted var(--line);font-size:.89rem}
+.contact tr:last-child td{border-bottom:none}
+.contact td:first-child{color:var(--soft);width:42%}
+
+/* ---------- rodapé ---------- */
+footer{
+  background:#22201d;color:#b5aca0;margin-top:70px;padding:44px 22px 38px;
+  text-align:center;font-size:.8rem;line-height:1.8;
+}
+footer .f-orn{
+  height:30px;max-width:170px;margin:0 auto 22px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 34 34'%3E%3Cg fill='none' stroke='%23c8912f' stroke-width='1.1'%3E%3Crect x='9' y='9' width='16' height='16'/%3E%3Crect x='9' y='9' width='16' height='16' transform='rotate(45 17 17)'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:repeat-x;background-position:center;opacity:.6;
+}
+footer .sig{font-family:Georgia,serif;font-style:italic;font-size:1.15rem;color:#f0c96a;margin-bottom:16px}
+footer a{color:#b5aca0}
+</style>
+</head>
+<body>
+
+<!-- ══════════ CAPA ══════════ -->
+<div class="hero">
+  <img src="roteiro-assets/hero-plaza-espana.jpg" alt="Plaza de España, Sevilha">
+  <div class="hero-in">
+    <div class="kicker">Lua de mel</div>
+    <h1 class="serif">Es<em>pa</em>ña</h1>
+    <div class="names">Fernando &amp; Daniele</div>
+    <div class="rule"></div>
+    <div class="when">25 de agosto — 9 de setembro de 2026</div>
+  </div>
+</div>
+<div class="countdown" id="cd">Sevilha · Madrid · Barcelona · Menorca</div>
+
+<div class="wrap">
+
+  <nav class="quicknav">
+    <a href="#antes">Antes de ir</a>
+    <a href="#ida">Ida</a>
+    <a href="#sevilha">Sevilha</a>
+    <a href="#madrid">Madrid</a>
+    <a href="#barcelona">Barcelona</a>
+    <a href="#menorca">Menorca</a>
+    <a href="#volta">Volta</a>
+    <a href="#reservas">Reservas</a>
+  </nav>
+
+  <div class="ornament tight"></div>
+
+  <div class="intro">
+    <p class="drop serif">Dezesseis dias, quatro cidades e um mar. Dos pátios mouriscos de Sevilha às torres de Gaudí, terminando numa ilha onde a água é impossivelmente azul — este é o caminho que vocês vão percorrer juntos.</p>
+  </div>
+
+  <div class="ornament"></div>
+
+  <!-- ══════════ ANTES DE IR ══════════ -->
+  <section id="antes">
+    <div class="section-label">Preparativos</div>
+    <h2 class="title serif">Antes de embarcar</h2>
+    <p class="subtitle">O que ainda precisa ser resolvido</p>
+
+    <ul class="check">
+      <li><b>Formulário de dados do carro</b>
+        <small>CarrerasCenter #51600 — obrigatório pelo Real Decreto 933/2021. Cadastre a Daniele como condutora adicional se ela for dirigir.</small>
+        <div class="docs">
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Confirmação da locadora</a>
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Comprovante de pagamento</a>
+        </div>
+      </li>
+      <li><b>Confirmar como o carro será entregue</b>
+        <small>Se for <i>self service</i>, a vaga chega por WhatsApp na hora marcada — o celular precisa estar com internet ao pousar em Mahón. WhatsApp +34 667 36 92 66.</small>
+      </li>
+      <li><b>PID — Permissão Internacional para Dirigir</b>
+        <small>Emitida pelo Detran-MG. Evita discussão no balcão e em blitz da Guardia Civil.</small>
+        <div class="docs">
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">CNH-e Daniele</a>
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">CNH Fernando</a>
+        </div>
+      </li>
+      <li><b>Ingressos que esgotam semanas antes</b>
+        <small>Real Alcázar · Sagrada Família · Park Güell · Casa Batlló. Comprar somente nos sites oficiais.</small>
+      </li>
+      <li><b>Reservar flamenco e o rooftop de Sevilha</b>
+        <small>Tablao (Casa de la Memoria ou La Casa del Flamenco) pro dia 27 · Abba The Roof Giralda pro dia 28 (+34 955 44 40 30) · Betis 7 Triana Experience pro jantar do dia 27, se quiserem garantir mesa.</small>
+      </li>
+      <li><b>App da Ryanair</b>
+        <small>Cartão de embarque impresso não é mais aceito. Check-in online 24h antes de cada voo.</small>
+        <div class="docs"><a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Itinerário Ryanair</a></div>
+      </li>
+      <li><b>Avisar os hotéis que é lua de mel</b>
+        <small>Já sinalizado no Booking em Madrid e Menorca — um e-mail direto ao hotel costuma render upgrade.</small>
+      </li>
+      <li><b>Na mala</b>
+        <small>Passaportes · adaptador tipo C/F · protetor solar forte (agosto na Andaluzia é brutal) · sapato leve de trilha para as calas de Menorca.</small>
+      </li>
+    </ul>
+  </section>
+
+  <div class="ornament"></div>
+
+  <!-- ══════════ IDA ══════════ -->
+  <section id="ida">
+    <div class="section-label">Viagem de ida</div>
+    <h2 class="title serif">Belo Horizonte → Sevilha</h2>
+    <p class="subtitle">Dois voos e um trem de alta velocidade</p>
+
+    <details class="day" open>
+      <summary><span class="dnum">Ter 25/8</span><span class="dttl">Belo Horizonte → Madrid</span></summary>
+      <div class="body">
+        <div class="leg air"><span class="ic">✈</span><div>
+          <div class="t">CNF 15:30 → GRU 16:50</div>
+          <div class="m">IB6534, operado pela LATAM · Terminal 2 · <code>····</code></div>
+        </div></div>
+        <div class="leg air"><span class="ic">🌙</span><div>
+          <div class="t">GRU 21:15 → Madrid 12:15 <span style="font-weight:400;color:var(--soft)">(no dia 26)</span></div>
+          <div class="m">IB6808 · Terminal 3 · uma mala de porão por pessoa</div>
+        </div></div>
+        <div class="docs">
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Bilhete Fernando</a>
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Bilhete Daniele</a>
+        </div>
+        <div class="note"><span class="h">Dica</span>Voo noturno de dez horas. Durmam o quanto der — o dia 26 é longo e ainda termina com um trem de alta velocidade.</div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Qua 26/8</span><span class="dttl">Madrid → Sevilha</span></summary>
+      <div class="body">
+        <div class="leg air"><span class="ic">🛬</span><div>
+          <div class="t">Pouso em Madrid-Barajas · 12:15</div>
+          <div class="m">Entre imigração e esteira de bagagem, conte de uma hora a uma hora e meia</div>
+        </div></div>
+        <div class="leg"><span class="ic">🚈</span><div>
+          <div class="t">T4 → Atocha · Cercanías C1 <span class="tag free">grátis</span></div>
+          <div class="m">Cerca de 38 minutos, direto. Já está incluso no bilhete Renfe — retire o passe na máquina da estação com os códigos <code>····</code> (Fernando) e <code>····</code> (Daniele)</div>
+        </div></div>
+        <div class="leg"><span class="ic">🚄</span><div>
+          <div class="t">Atocha 16:00 → Sevilha-Santa Justa 18:42</div>
+          <div class="m">Renfe AVE 02160 · <code>····</code> · coche 2, assentos 10C e 10B</div>
+        </div></div>
+        <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Bilhetes do trem</a>
+
+        <div class="note warn"><span class="h">Atenção · margem apertada</span>
+          Do pouso ao fechamento do acesso ao trem (15:50) sobram cerca de três horas e meia, e boa parte vai em imigração e deslocamento. Vão direto, sem almoço demorado no aeroporto. Se o voo atrasar, o AVE pode ser remarcado pelo app da Renfe ou no balcão de Atocha — há trens para Sevilha quase de hora em hora.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <div class="ornament"></div>
+</div>
+
+<!-- ══════════ SEVILHA ══════════ -->
+<section class="city" id="sevilha">
+  <div class="city-cover">
+    <img src="roteiro-assets/sevilha-giralda.jpg" alt="A Giralda, Sevilha">
+    <div class="cap">
+      <span class="n">Primeira parada · Andaluzia</span>
+      <h3 class="serif">Sevilha</h3>
+      <div class="dates">26 a 29 de agosto · 3 noites</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stay">
+      <span class="lbl">Hospedagem</span>
+      <div class="t">Hotel Legado Magdalena</div>
+      <div class="m">Calle San Pablo 22, 41001 · quarto luxo, cama queen<br>
+      A 7 minutos a pé da Catedral · itinerário — ver documento</div>
+      <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Reserva do hotel</a>
+    </div>
+
+    <div class="note good"><span class="h">Chegada · noite de 26/8</span>
+      O trem pousa na Santa Justa às 18:42. Deixem as malas no hotel e saiam para um jantar leve na <b>Bodega Santa Cruz "Las Columnas"</b>, tapas de bairro pertinho dali. A Calle San Pablo desemboca na Catedral, e a primeira caminhada noturna sob a Giralda iluminada é o melhor cartão de boas-vindas que a cidade tem a oferecer — noite calma, sem compromisso, pra descansar da viagem depois de dois voos e um trem.
+    </div>
+
+    <details class="day" open>
+      <summary><span class="dnum">Qui 27/8</span><span class="dttl">Arquitetura mourisca e o rio</span></summary>
+      <div class="body">
+        <div class="note warn"><span class="h">O calor é o inimigo</span>
+          Fim de agosto em Sevilha passa dos 40 °C. As horas mais duras são entre 14h e 16h30 — o dia abaixo já está desenhado em volta disso.
+        </div>
+
+        <ul class="spots">
+          <li class="meal"><span class="time">07:30</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">Acordem por volta das 6h45 — banho e sete minutos a pé até o Alcázar. O horário do café não vem confirmado na reserva do hotel; perguntem na recepção no check-in.</span></div></li>
+          
+          <li><span class="time">09:30</span><div class="sc"><b>Real Alcázar</b><span class="tag">reservar</span>
+            <span class="d">O ponto alto da cidade — palácio mudéjar ainda em uso pela família real. Vale o ingresso extra do Cuarto Real Alto.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Real+Alc%C3%A1zar+de+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/sevilha-alcazar.jpg" alt="Real Alcázar, Sevilha" loading="lazy"></li>
+          <li><span class="time">11:15</span><div class="sc"><b>Catedral e Giralda</b><span class="tag">reservar</span>
+            <span class="d">A maior catedral gótica do mundo. A subida à Giralda é por rampas, sem um único degrau — foram feitas para subir a cavalo.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Catedral+de+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/sevilha-catedral.jpg" alt="Catedral de Sevilha" loading="lazy"></li>
+          <li><span class="time">12:15</span><div class="sc"><b>Bairro de Santa Cruz</b>
+            <span class="d">A antiga judiaria, colada ao Alcázar. Não siga mapa: o prazer é justamente se perder nas vielas.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Barrio+Santa+Cruz+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/sevilha-santacruz.jpg" alt="Viela do Bairro de Santa Cruz" loading="lazy"></li>
+          <li><span class="time">12:45</span><div class="sc"><b>Parque de María Luisa → Plaza de España</b><span class="tag free">grátis</span>
+            <span class="d">Caminhem por dentro do parque, sombreado e movimentado, até a praça — arquitetura neomourisca construída para a Exposição de 1929. Os 48 bancos de azulejo representam cada província da Espanha.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Plaza+de+Espa%C3%B1a+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/hero-plaza-espana.jpg" alt="Plaza de España, Sevilha" loading="lazy"></li>
+          <li><span class="time">13:30</span><div class="sc"><b>Tardeo</b>
+            <span class="d">O ritual sevilhano de beber à tarde, não à noite. Uma parada de rebujito (manzanilla + refrigerante) num terraço de Santa Cruz.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Barrio+Santa+Cruz+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li class="meal"><span class="time">14:15</span><div class="sc"><b>Almoço</b>
+            <span class="d">Tapas leves em Santa Cruz mesmo, sem se afastar — as cozinhas de restaurante em Sevilha costumam fechar entre 15h30 e 16h para o almoço, então não sobra muita folga depois do tardeo.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Barrio+Santa+Cruz+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+        </ul>
+
+        <ul class="spots">
+          <li><span class="time">14:45</span><div class="sc"><b>Siesta no hotel</b>
+            <span class="d">Depois do almoço, sol direto até as 16h30 — inclusive a piscina do rooftop ainda castiga nesse horário. Banho frio, AC, descanso de verdade: é a estratégia certa pro calor, não tempo perdido.</span></div></li>
+          <li class="activity"><span class="time">16:30</span><div class="sc"><b>Piscina do rooftop</b>
+            <span class="d">Já esfriando, vale aproveitar antes de sair de novo.</span></div></li>
+          <li class="activity"><span class="time">17:30</span><div class="sc"><b>Bicicleta pela margem do Guadalquivir</b>
+            <span class="d">Sai perto do hotel, já com o calor cedendo.</span></div></li>
+        </ul>
+
+        <ul class="spots">
+          <li class="meal"><span class="time">20:00</span><div class="sc"><b>Jantar</b>
+            <span class="d"><b>Betis 7 Triana Experience</b> — 4,6/5 no Tripadvisor com 1.565 avaliações, terraço à beira-rio em Triana, a 5 min do hotel. Alternativa: <b>Casa Ribera</b>, nota 5,0 mas só 3 avaliações — reservem os dois e decidam na hora.</span>
+            <details class="spot-media"><summary>ver mapas</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Betis+7+Triana+Experience+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li><span class="time">22:00</span><div class="sc"><b>Flamenco</b><span class="tag">reservar</span>
+            <span class="d">Casa de la Memoria ou La Casa del Flamenco — salas de cinquenta lugares, sem espetáculo para turista.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Casa+de+la+Memoria+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+        </ul>
+
+        <div class="note"><span class="h">Se sobrar energia (opcional)</span>Outros palácios mudéjares que a Daniele provavelmente vai adorar: <b>Casa de Pilatos</b> (azulejaria linda, quase vazio) e <b>Palacio de las Dueñas</b> (jardins da duquesa de Alba). Nenhum dos dois está na agenda fixa — encaixam no lugar da bicicleta ou de um tardeo mais curto, se quiserem trocar.</div>
+
+        <div class="note"><span class="h">Tapas, se quiserem variar</span>El Rinconcillo, o mais antigo da cidade, aberto desde 1670 · Bodeguita Romero · Bar Alfalfa</div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Sex 28/8</span><span class="dttl">Triana, Setas e a noite mais local</span></summary>
+      <div class="body">
+        <ul class="spots">
+          <li class="meal"><span class="time">08:30</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">Dia mais tranquilo — dá para dormir um pouco mais que ontem.</span></div></li>
+          
+          <li><span class="time">10:00</span><div class="sc"><b>Triana, sem pressa</b>
+            <span class="d">Atravessem a Ponte de Isabel II pela manhã. Ruas coloridas à beira do rio, ateliês de cerâmica, Mercado de Triana — foi daqui que saíram os grandes nomes do flamenco.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Barrio+de+Triana+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/sevilha-triana.jpg" alt="Ponte de Triana ao anoitecer" loading="lazy"></li>
+          <li class="meal"><span class="time">13:00</span><div class="sc"><b>Almoço e tardeo</b>
+            <span class="d">Tapas de bairro em Triana mesmo, sem sair da área — aproveitem os terraços à beira-rio pro tardeo do meio-dia.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Barrio+de+Triana+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+        </ul>
+
+        <ul class="spots">
+          <li><span class="time">14:00</span><div class="sc"><b>Siesta no hotel</b>
+            <span class="d">Mesma lógica do dia anterior — fica pertinho de Triana, a volta é rápida.</span></div></li>
+          <li class="activity"><span class="time">16:30</span><div class="sc"><b>Piscina do rooftop</b>
+            <span class="d">Já esfriando, até as 17h30.</span></div></li>
+        </ul>
+
+        <ul class="spots">
+          <li><span class="time">17:30</span><div class="sc"><b>Caminhada pela margem do rio</b>
+            <span class="d">De volta ao centro, rumo às Setas, já com o calor cedendo.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Puente+de+Triana+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/sevilha-triana.jpg" alt="Margem do Guadalquivir em Sevilha" loading="lazy"></li>
+          <li><span class="time">19:00</span><div class="sc"><b>Metropol Parasol</b>
+            <span class="d">As "Setas" — a maior estrutura de madeira do mundo. Passarela no topo, pôr do sol.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Metropol+Parasol+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/sevilha-setas.jpg" alt="Metropol Parasol, Sevilha" loading="lazy"></li>
+          <li><span class="time">20:30</span><div class="sc"><b>Abba The Roof Giralda</b>
+            <span class="d">Rooftop do Hotel Abba Sevilla, colado nas Setas na Plaza de la Encarnación — atravessem a praça e já estão lá. Terraço aberto + espaço com vidro e AC. Dom-qui 13h-00h, sex/sáb 13h-01h. Reservar: +34 955 44 40 30.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Abba+The+Roof+Giralda+Sevilla&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+        </ul>
+
+        <div class="note good"><span class="h">A noite mais local da viagem</span>
+          <b>Plaza del Salvador</b> — sentem nas escadarias da igreja com todo mundo, cerveja ou rebujito comprado num quiosque ali do lado. Sem reserva, sem cardápio, é o programa de sexta-feira que os sevilhanos de verdade fazem. Se ainda tiverem energia depois da meia-noite, <b>Casa Anselma</b> em Triana tem flamenco espontâneo sem hora marcada — bônus, não compromisso.
+        </div>
+
+        <p>Última noite na Andaluzia. Arrumem as malas: o trem de amanhã sai às dez e meia.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="wrap"><div class="ornament"></div></div>
+
+<!-- ══════════ MADRID ══════════ -->
+<section class="city" id="madrid">
+  <div class="city-cover">
+    <img src="roteiro-assets/madrid-plaza-mayor.jpg" alt="Plaza Mayor, Madrid">
+    <div class="cap">
+      <span class="n">Segunda parada · Castela</span>
+      <h3 class="serif">Madrid</h3>
+      <div class="dates">29 a 31 de agosto · 2 noites</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stay">
+      <span class="lbl">Hospedagem</span>
+      <div class="t">7 Islas Hotel</div>
+      <div class="m">Calle Valverde 14, 28004 · café da manhã incluso · em Malasaña<br>
+      +34 915 23 46 88 · confirmação e PIN — ver documento · check-in a partir das 14:30</div>
+      <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Reserva do hotel</a>
+    </div>
+
+    <details class="day">
+      <summary><span class="dnum">Sáb 29/8</span><span class="dttl">Sevilha → Madrid</span></summary>
+      <div class="body">
+        <div class="leg"><span class="ic">🚄</span><div>
+          <div class="t">Sevilha-Santa Justa 10:37 → Atocha 13:16</div>
+          <div class="m">Ouigo 06507 · <code>····</code> · coche 6, assentos 1E e 2E · tarifa Plus<br>
+          O embarque abre 30 minutos antes e fecha 5 minutos antes — há controle de bagagem</div>
+        </div></div>
+        <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Bilhetes do trem</a>
+
+        <p style="margin-top:22px"><b>Tarde e noite</b> — o hotel fica em Malasaña e tudo abaixo é a pé:</p>
+        <ul class="spots">
+          <li class="meal"><span class="time">14:30</span><div class="sc"><b>Almoço no Mercado de San Miguel</b>
+            <span class="d">O mercado funciona também como almoço — é caro por porção, mas rápido e sem reserva, bom para quem está chegando do trem. Depois, Plaza Mayor e Puerta del Sol, coladas ali do lado.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Mercado+de+San+Miguel+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/madrid-sanmiguel.jpg" alt="Mercado de San Miguel, Madrid" loading="lazy"></li>
+          <li><span class="time">16:00</span><div class="sc"><b>Palácio Real</b>
+            <span class="d">Por fora já impressiona — é o maior palácio real da Europa ocidental.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Palacio+Real+de+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/madrid-palacioreal.jpg" alt="Palácio Real de Madrid" loading="lazy"></li>
+          <li><span class="time">19:45</span><div class="sc"><b>Templo de Debod</b><span class="tag free">grátis</span>
+            <span class="d">Um templo egípcio de verdade, doado à Espanha em 1968. O melhor pôr do sol de Madrid, sem discussão.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Templo+de+Debod+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/madrid-debod.jpg" alt="Templo de Debod ao anoitecer" loading="lazy"></li>
+          <li class="meal"><span class="time">21:30</span><div class="sc"><b>Jantar</b>
+            <span class="d">Sobrino de Botín, o restaurante mais antigo do mundo em funcionamento (1725) — reserve. Ou tapas na Cava Baja, em La Latina.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Sobrino+de+Bot%C3%ADn+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/madrid-botin.jpg" alt="Sobrino de Botín, Madrid" loading="lazy"></li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Dom 30/8</span><span class="dttl">Rastro, Prado e Retiro</span></summary>
+      <div class="body">
+        <div class="note good"><span class="h">Sorte de calendário</span>
+          É domingo — dia do <b>El Rastro</b>, o feirão de rua de La Latina, das 9h às 15h. Só acontece aos domingos, e vocês pegaram justamente um.
+        </div>
+
+        <ul class="spots">
+          <li class="meal"><span class="time">08:30</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">O Rastro já enche cedo — vale sair do café direto para lá.</span></div></li>
+          
+          <li><span class="time">09:30</span><div class="sc"><b>El Rastro</b>
+            <span class="d">E depois um vermute nos bares da Cava Baja — é o ritual local de domingo.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=El+Rastro+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/madrid-rastro.jpg" alt="El Rastro, Madrid" loading="lazy"></li>
+          <li class="meal"><span class="time">13:30</span><div class="sc"><b>Almoço</b>
+            <span class="d">Tapas nos bares da Cava Baja, seguindo o vermute — em Madrid a maioria das cozinhas fecha por volta das 16h no domingo, então não convém deixar para depois disso.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Calle+Cava+Baja+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li><span class="time tbd">a<br>combinar</span><div class="sc"><b>Museu do Prado</b> ou <b>Reina Sofía</b><span class="tag tip">arte, opcional</span>
+            <span class="d">Prado para Velázquez e Goya; Reina Sofía para o Guernica. Só entra se topar museu — vocês preferem, em geral, se perder caminhando a fila de museu. O Prado é grátis das 17h às 19h aos domingos.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Museo+del+Prado+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li><span class="time">17:00</span><div class="sc"><b>Parque del Retiro</b>
+            <span class="d">Aluguem um barquinho no lago e visitem o Palacio de Cristal, uma estufa de vidro de 1887 no meio do parque.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Parque+del+Retiro+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/madrid-cristal.jpg" alt="Palacio de Cristal, Parque del Retiro" loading="lazy"></li>
+          <li><span class="time">19:00</span><div class="sc"><b>Plaza de Cibeles</b>
+            <span class="d">Suba ao mirante do Palacio de Cibeles para ver a cidade inteira.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Palacio+de+Cibeles+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/madrid-cibeles.jpg" alt="Palacio de Cibeles, Madrid" loading="lazy"></li>
+          <li><span class="time">21:30</span><div class="sc"><b>Noite</b>
+            <span class="d">Malasaña, na porta do hotel, ou Chueca ao lado.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Malasa%C3%B1a+Madrid&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="wrap"><div class="ornament"></div></div>
+
+<!-- ══════════ BARCELONA ══════════ -->
+<section class="city" id="barcelona">
+  <div class="city-cover">
+    <img src="roteiro-assets/bcn-sagrada.jpg" alt="Interior da Sagrada Família">
+    <div class="cap">
+      <span class="n">Terceira parada · Catalunha</span>
+      <h3 class="serif">Barcelona</h3>
+      <div class="dates">31 de agosto a 3 de setembro · 3 noites</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stay">
+      <span class="lbl">Hospedagem</span>
+      <div class="t">Uma House by Yurbban Trafalgar</div>
+      <div class="m">Carrer de Trafalgar 30, 08003 · confirmação <code>····</code><br>
+      Metrô Urquinaona a 2 min · Museu Picasso a 8 min a pé · na borda do Born<br>
+      Pedem documento com foto e cartão de crédito no check-in</div>
+      <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Reserva do hotel</a>
+    </div>
+
+    <details class="day">
+      <summary><span class="dnum">Seg 31/8</span><span class="dttl">Madrid → Barcelona</span></summary>
+      <div class="body">
+        <div class="leg"><span class="ic">🚄</span><div>
+          <div class="t">Atocha 11:22 → Barcelona-Sants 14:39</div>
+          <div class="m">iryo 06111 · <code>····</code> · coche 2, assentos 9A e 9B<br>Saiam do hotel até 10h15</div>
+        </div></div>
+        <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Bilhetes do trem</a>
+
+        <div class="note warn"><span class="h">Almoço apertado</span>
+          O trem chega à Sants às 14:39 — já perto do horário em que muitas cozinhas fecham para o almoço (~15h30-16h). Comam algo rápido na própria estação ou levem o almoço para o hotel antes de sair para caminhar.
+        </div>
+
+        <p style="margin-top:22px"><b>Tarde e noite</b> — o hotel fica na borda do Born, o melhor bairro da cidade para caminhar:</p>
+        <ul class="spots">
+          <li><span class="time">15:30</span><div class="sc"><b>El Born</b>
+            <span class="d">Santa Maria del Mar, a catedral gótica construída pelos estivadores do porto · Passeig del Born · Mercat del Born.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=El+Born+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-born.jpg" alt="El Born, Barcelona" loading="lazy"></li>
+          <li><span class="time">17:00</span><div class="sc"><b>Bairro Gòtic</b>
+            <span class="d">Catedral de Barcelona, Plaça Reial e o Pont del Bisbe. À noite, com as luzes amareladas, é outro lugar.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Barri+G%C3%B2tic+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-gotic.jpg" alt="Carrer dels Arcs, Barri Gòtic" loading="lazy"></li>
+          <li class="meal"><span class="time">20:30</span><div class="sc"><b>Jantar</b>
+            <span class="d">El Xampanyet — cava e tapas em pé, clássico absoluto do Born desde 1929.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=El+Xampanyet+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-xampanyet.jpg" alt="El Xampanyet, Barcelona" loading="lazy"></li>
+        </ul>
+
+        <div class="note warn"><span class="h">Batedores de carteira</span>
+          Aqui o problema é real, sobretudo na Rambla, no metrô e na fila da Sagrada Família. Mochila na frente do corpo, nada no bolso de trás.
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Ter 1/9</span><span class="dttl">O dia de Gaudí</span></summary>
+      <div class="body">
+        <ul class="spots">
+          <li class="meal"><span class="time">07:15</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">Dia mais madrugador da viagem — a Sagrada Família abre 9h e vale chegar cedo, então acordem por volta das 6h30.</span></div></li>
+          
+          <li><span class="time">08:30</span><div class="sc"><b>Sagrada Família</b><span class="tag">reservar</span>
+            <span class="d">Pegue o ingresso <b>com subida às torres</b> — a da Natividade tem a melhor vista. Vá cedo ou no fim da tarde, quando o sol acende os vitrais laranja de um lado e azuis do outro.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Sagrada+Fam%C3%ADlia+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-sagrada.jpg" alt="Interior da Sagrada Família" loading="lazy"></li>
+          <li><span class="time">11:30</span><div class="sc"><b>Casa Batlló</b><span class="tag">reservar</span>
+            <span class="d">O interior mais impressionante de todo o Gaudí civil. A fachada é o dragão de São Jorge.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Casa+Batll%C3%B3+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-batllo.jpg" alt="Fachada da Casa Batlló" loading="lazy"></li>
+          <li><span class="time">13:30</span><div class="sc"><b>La Pedrera (Casa Milà)</b><span class="tag">reservar</span>
+            <span class="d">Pelo terraço com as chaminés-guerreiras. A sessão noturna é feita para casal.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=La+Pedrera+Casa+Mil%C3%A0+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-pedrera.jpg" alt="La Pedrera, Casa Milà" loading="lazy"></li>
+          <li class="meal"><span class="time">14:45</span><div class="sc"><b>Almoço</b>
+            <span class="d">Pelas redondezas da Pedrera, no Eixample — em Barcelona as cozinhas costumam fechar entre 15h30 e 16h, então esse é praticamente o último horário confortável.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Eixample+Barcelona+restaurants&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li><span class="time">17:00</span><div class="sc"><b>Park Güell</b><span class="tag">reservar</span>
+            <span class="d">A zona monumental é paga e com horário marcado. O banco ondulado de mosaico é o cartão-postal.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Park+G%C3%BCell+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-guell.jpg" alt="Terraço do Park Güell" loading="lazy"></li>
+          <li><span class="time">19:45</span><div class="sc"><b>Bunkers del Carmel</b><span class="tag free">grátis</span>
+            <span class="d">Antigas baterias antiaéreas da Guerra Civil. O melhor pôr do sol da cidade, 360° — levem algo para beber.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Bunkers+del+Carmel+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-bunkers.jpg" alt="Vista dos Bunkers del Carmel" loading="lazy"></li>
+        </ul>
+
+        <div class="note"><span class="h">Não exagerem</span>Quatro Gaudí no mesmo dia não funciona. Sagrada Família mais um dos outros já enche a agenda com folga.</div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Qua 2/9</span><span class="dttl">Mar, mercado e montanha</span></summary>
+      <div class="body">
+        <ul class="spots">
+          <li class="meal"><span class="time">08:00</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">A Boqueria enche rápido de manhã — saiam do café direto para lá.</span></div></li>
+          
+          <li><span class="time">09:00</span><div class="sc"><b>La Boqueria</b>
+            <span class="d">Na Rambla. Vão antes das dez — depois vira multidão.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Mercat+de+la+Boqueria+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-boqueria.jpg" alt="Mercat de la Boqueria, Barcelona" loading="lazy"></li>
+          <li><span class="time">10:30</span><div class="sc"><b>Montjuïc</b>
+            <span class="d">Teleférico e o castelo — o Fundació Miró fica dentro se topar museu. À noite, a Fonte Mágica, confiram os dias de show antes de subir.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Montju%C3%AFc+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-montjuic.jpg" alt="Teleférico de Montjuïc" loading="lazy"></li>
+          <li class="meal"><span class="time">13:30</span><div class="sc"><b>Barceloneta — almoço e praia</b>
+            <span class="d">Paella à beira-mar antes que as cozinhas fechem (por volta das 15h30-16h), depois praia e tempo livre no bairro dos pescadores até os anos 90.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Barceloneta+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-barceloneta.jpg" alt="Praia da Barceloneta" loading="lazy"></li>
+          <li><span class="time">17:30</span><div class="sc"><b>Parc de la Ciutadella</b>
+            <span class="d">A dez minutos do hotel, com a cascata monumental em que o jovem Gaudí trabalhou.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Parc+de+la+Ciutadella+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-ciutadella.jpg" alt="Cascata do Parc de la Ciutadella" loading="lazy"></li>
+          <li><span class="time tbd">alterna-<br>tiva</span><div class="sc"><b>Tibidabo</b>
+            <span class="d">Parque de diversões de 1901 no ponto mais alto da cidade, com a igreja do Sagrat Cor ao lado — troca o dia todo, não encaixa junto com o resto.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Tibidabo+Barcelona&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/bcn-tibidabo.jpg" alt="Parque de diversões do Tibidabo" loading="lazy"></li>
+        </ul>
+        <p>Arrumem as malas hoje. O voo de amanhã é ao meio-dia.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="wrap"><div class="ornament"></div></div>
+
+<!-- ══════════ MENORCA ══════════ -->
+<section class="city" id="menorca">
+  <div class="city-cover">
+    <img src="roteiro-assets/menorca-macarella.jpg" alt="Cala Macarella, Menorca">
+    <div class="cap">
+      <span class="n">Última parada · Ilhas Baleares</span>
+      <h3 class="serif">Menorca</h3>
+      <div class="dates">3 a 8 de setembro · 5 noites</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stay">
+      <span class="lbl">Hospedagem</span>
+      <div class="t">Hotel Bahía · Cala Santandría</div>
+      <div class="m">Carrer dels Suissos 3, 07760 · café da manhã incluso · estacionamento grátis<br>
+      Confirmação e PIN — ver documento · check-in entre 15h e 21h · a 3 km de Ciutadella</div>
+      <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Reserva do hotel</a>
+    </div>
+
+    <details class="day">
+      <summary><span class="dnum">Qui 3/9</span><span class="dttl">Barcelona → Menorca</span></summary>
+      <div class="body">
+        <div class="leg air"><span class="ic">✈</span><div>
+          <div class="t">Barcelona El Prat 12:00 → Mahón 13:00</div>
+          <div class="m">Ryanair FR6881 · <code>····</code> · assentos 15F e 15E · mala de porão de 20 kg cada<br>
+          Saiam do hotel por volta das 9h15 — Aerobús da Plaça Catalunya, uns 35 minutos. Check-in só pelo app.</div>
+        </div></div>
+        <div class="leg car"><span class="ic">🚗</span><div>
+          <div class="t">Retirada do carro · 13:30 · Parking 1 do aeroporto</div>
+          <div class="m">CarrerasCenter / Poppycars · reserva <code>····</code> · MG3 automático<br>
+          Sem franquia, sem caução e sem exigência de cartão de crédito · €229 já pagos</div>
+        </div></div>
+        <div class="docs">
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Itinerário do voo</a>
+          <a class="doc" href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Reserva do carro</a>
+        </div>
+
+        <div class="note good"><span class="h">Aproveitem que pousaram em Mahón</span>
+          Vocês só voltam a esse lado da ilha no dia da partida — e às nove da manhã.
+        </div>
+
+        <ul class="spots">
+          <li class="meal"><span class="time">13:30</span><div class="sc"><b>Porto de Mahón</b>
+            <span class="d">Almoço à beira do segundo maior porto natural do mundo.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Puerto+de+Ma%C3%B3n+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-mahon.jpg" alt="Porto de Mahón, Menorca" loading="lazy"></li>
+          <li><span class="time">15:00</span><div class="sc"><b>Destilaria Xoriguer</b>
+            <span class="d">O gin da ilha, tradição que vem dos ingleses do século 18. Antes de atravessar para Ciutadella — uns 50 minutos pela Me-1.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Destiler%C3%ADas+Xoriguer+Ma%C3%B3n&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li><span class="time">20:00</span><div class="sc"><b>Castell de Sant Nicolau</b>
+            <span class="d">Pôr do sol, a três quilômetros do hotel.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Castell+de+Sant+Nicolau+Ciutadella&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-santnicolau.jpg" alt="Castell de Sant Nicolau, Ciutadella" loading="lazy"></li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Sex 4/9</span><span class="dttl">As calas do sul</span></summary>
+      <div class="body">
+        <ul class="spots">
+          <li class="meal"><span class="time">07:45</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">Saiam cedo — o estacionamento da Turqueta enche até as dez da manhã.</span></div></li>
+          
+          <li><span class="time">09:00</span><div class="sc"><b>Cala en Turqueta</b>
+            <span class="d">Vinte minutos de Ciutadella. A água tem uma cor que fotografia nenhuma resolve.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Cala+en+Turqueta+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-turqueta.jpg" alt="Cala en Turqueta, Menorca" loading="lazy"></li>
+          <li><span class="time">11:00</span><div class="sc"><b>Cala Macarella e Macarelleta</b>
+            <span class="d">As do cartão-postal. Macarelleta é a menor, alcançada por uma descida curta pela rocha — e é a mais bonita das duas.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Cala+Macarella+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-macarella.jpg" alt="Cala Macarella, Menorca" loading="lazy"></li>
+          <li class="meal"><span class="time">14:00</span><div class="sc"><b>Almoço</b>
+            <span class="d">De volta a Ciutadella, ou num chiringuito de praia se ainda estiverem na cala — os chiringuitos costumam servir direto o dia todo, ao contrário dos restaurantes de cidade, que fecham a cozinha por volta das 16h.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Ciutadella+de+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li class="meal"><span class="time">20:30</span><div class="sc"><b>Jantar no porto de Ciutadella</b>
+            <span class="d">Mesas montadas na pedra, à beira d'água, sob a cidade velha.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Port+de+Ciutadella+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-ciutadella.jpg" alt="Porto de Ciutadella" loading="lazy"></li>
+        </ul>
+
+        <div class="note warn"><span class="h">Estacionamento</span>
+          Os das calas do sul enchem até as dez da manhã e são pagos — de €5 a €7, muitos só em dinheiro. Cheguem cedo ou depois das quatro da tarde, quando a luz também fica melhor. As estradas de acesso são estreitas e sem acostamento.
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Sáb 5/9</span><span class="dttl">O norte selvagem</span></summary>
+      <div class="body">
+        <ul class="spots">
+          <li class="meal"><span class="time">08:00</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">O norte é mais vazio — sem a pressa do estacionamento de ontem, mas ainda vale sair cedo pelo calor.</span></div></li>
+          
+          <li><span class="time">09:00</span><div class="sc"><b>Cala Pregonda</b>
+            <span class="d">Areia avermelhada e formações rochosas quase marcianas. Trinta minutos de trilha desde o estacionamento — levem água.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Cala+Pregonda+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-pregonda.jpg" alt="Cala Pregonda, Menorca" loading="lazy"></li>
+          <li><span class="time">12:00</span><div class="sc"><b>Cala Cavalleria e Cala Presili</b>
+            <span class="d">Areia vermelha, mar aberto, vento.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Cala+Cavalleria+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-cavalleria.jpg" alt="Cala Cavalleria, Menorca" loading="lazy"></li>
+          <li class="meal"><span class="time">14:30</span><div class="sc"><b>Almoço em Fornells</b>
+            <span class="d">Parada rápida e leve — a caldereta de langosta de verdade fica para o dia 6, quando voltam aqui com calma. Fornells é a vila com mais opção de restaurante nessa ponta da ilha; comam por volta desse horário, porque depois das 16h a maioria das cozinhas já fechou.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Fornells+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-fornells.jpg" alt="Fornells, Menorca" loading="lazy"></li>
+          <li><span class="time">20:00</span><div class="sc"><b>Farol de Cavalleria</b>
+            <span class="d">O pôr do sol mais bonito da ilha, no ponto mais setentrional de Menorca.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Far+de+Cavalleria+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+        </ul>
+
+        <p>O norte é geologicamente outro planeta em relação ao sul: rocha escura, vegetação baixa e quase ninguém. Vale o dia inteiro.</p>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Dom 6/9</span><span class="dttl">Monte Toro, Fornells e a pré-história</span></summary>
+      <div class="body">
+        <ul class="spots">
+          <li class="meal"><span class="time">08:30</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">No hotel, antes de sair.</span></div></li>
+          
+          <li><span class="time">09:30</span><div class="sc"><b>Monte Toro</b>
+            <span class="d">O ponto mais alto da ilha, 358 metros. Num dia claro dá para ver os dois mares e até Mallorca.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Monte+Toro+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-montetoro.jpg" alt="Monte Toro, Menorca" loading="lazy"></li>
+          <li class="meal"><span class="time">12:00</span><div class="sc"><b>Fornells</b>
+            <span class="d">Vila de pescadores toda branca, famosa pela <i>caldereta de langosta</i>. É cara, e é o prato da ilha.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Fornells+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-fornells.jpg" alt="Fornells, Menorca" loading="lazy"></li>
+          <li><span class="time">15:30</span><div class="sc"><b>Es Grau</b>
+            <span class="d">Reserva da biosfera, mar raso e calmo, com a ilhota d'en Colom em frente.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Es+Grau+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-esgrau.jpg" alt="Es Grau, Menorca" loading="lazy"></li>
+          <li><span class="time">17:30</span><div class="sc"><b>Naveta des Tudons</b><span class="tag tip">opcional</span>
+            <span class="d">Tumba megalítica de cerca de 3.000 a.C., a construção mais antiga da Europa ainda de pé — fica na estrada entre Ciutadella e Mahón, é uma parada rápida se estiver no caminho. Marcada como opcional porque vocês não costumam curtir ruína.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Naveta+des+Tudons+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-tudons.jpg" alt="Naveta des Tudons, Menorca" loading="lazy"></li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Seg 7/9</span><span class="dttl">Último dia na ilha</span></summary>
+      <div class="body">
+        <ul class="spots">
+          <li class="meal"><span class="time">08:30</span><div class="sc"><b>Café da manhã</b>
+            <span class="d">No hotel, antes de sair.</span></div></li>
+          
+          <li><span class="time">09:30</span><div class="sc"><b>A cala preferida da viagem</b>
+            <span class="d">Voltem sem pressa e sem roteiro. A essa altura vocês já vão saber qual é — por isso não dá para adiantar mapa nem foto aqui.</span></div></li>
+          <li><span class="time tbd">ou</span><div class="sc"><b>Cala Mitjana e Mitjaneta</b>
+            <span class="d">Quinze minutos de caminhada do estacionamento, entre pinheiros.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Cala+Mitjana+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-mitjana.jpg" alt="Cala Mitjana, Menorca" loading="lazy"></li>
+          <li class="meal"><span class="time">14:00</span><div class="sc"><b>Almoço</b>
+            <span class="d">Voltando para Ciutadella — cozinhas por lá costumam fechar por volta das 16h, então vale almoçar antes de começar a tarde na cidade.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Ciutadella+de+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div></li>
+          <li><span class="time">16:00</span><div class="sc"><b>Tarde em Ciutadella</b>
+            <span class="d">Centro histórico, catedral e a Plaça des Born, onde ficava o castelo árabe.</span>
+            <details class="spot-media"><summary>ver mapa</summary>
+              <div class="spot-media-grid"><iframe data-src="https://maps.google.com/maps?q=Ciutadella+de+Menorca&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </details></div><img class="spot-thumb" src="roteiro-assets/menorca-ciutadella.jpg" alt="Ciutadella de Menorca" loading="lazy"></li>
+        </ul>
+
+        <div class="note warn"><span class="h">Preparem a saída de amanhã</span>
+          Arrumem as malas hoje, abasteçam o carro (a devolução costuma exigir tanque cheio) e avisem a recepção que vocês saem antes do café — peçam algo para levar.
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="wrap"><div class="ornament"></div></div>
+
+<!-- ══════════ VOLTA ══════════ -->
+<div class="wrap">
+  <section id="volta">
+    <div class="section-label">Viagem de volta</div>
+    <h2 class="title serif">Menorca → Belo Horizonte</h2>
+    <p class="subtitle">Um dia inteiro de deslocamento, com um bônus em Barcelona</p>
+
+    <details class="day" open>
+      <summary><span class="dnum">Ter 8/9</span><span class="dttl">Menorca → Barcelona → voo de volta</span></summary>
+      <div class="body">
+        <div class="note warn"><span class="h">Dia longo</span>Despertador às 6h. Saída de Cala Santandría às 6h30.</div>
+
+        <div class="leg car"><span class="ic">🚗</span><div>
+          <div class="t">Devolução do carro · 07:30 · Parking 1</div>
+          <div class="m">Confirmem antes o procedimento no horário — pode ser self-service, com fotos do carro</div>
+        </div></div>
+        <div class="leg air"><span class="ic">✈</span><div>
+          <div class="t">Mahón 09:05 → Barcelona 10:00</div>
+          <div class="m">Ryanair FR6882 · <code>····</code> · assentos 15F e 15E</div>
+        </div></div>
+
+        <div class="note good"><span class="h">Onze horas livres em Barcelona</span>
+          Vocês pousam às dez da manhã e o voo para Madrid é só às 21h10. Deixem as malas na consigna do aeroporto ou nos lockers da Estació de Sants (€6 a €10 por dia) e voltem ao centro pelo trem R2 Nord, 25 minutos. É praticamente um dia extra na cidade — usem para o que não coube nos primeiros dias.
+        </div>
+
+        <div class="leg air"><span class="ic">✈</span><div>
+          <div class="t">Barcelona T1 21:10 → Madrid 22:35</div>
+          <div class="m">IB0424 · <code>····</code> · estejam no Terminal 1 às 19h15</div>
+        </div></div>
+        <div class="leg air"><span class="ic">🌙</span><div>
+          <div class="t">Madrid 23:55 → São Paulo 05:55 <span style="font-weight:400;color:var(--soft)">(no dia 9)</span></div>
+          <div class="m">IB0267 · chegada no Terminal 3</div>
+        </div></div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><span class="dnum">Qua 9/9</span><span class="dttl">São Paulo → Belo Horizonte</span></summary>
+      <div class="body">
+        <div class="leg air"><span class="ic">✈</span><div>
+          <div class="t">GRU 10:25 → CNF 11:35</div>
+          <div class="m">IB6502, operado pela LATAM · Terminal 2 · <code>····</code></div>
+        </div></div>
+        <p>Conexão de quatro horas e meia em Guarulhos depois do voo noturno. Em casa antes do almoço.</p>
+      </div>
+    </details>
+  </section>
+
+  <div class="ornament"></div>
+
+  <!-- ══════════ RESERVAS ══════════ -->
+  <section id="reservas">
+    <div class="section-label">Documentos</div>
+    <h2 class="title serif">Todas as reservas</h2>
+    <p class="subtitle">Toque em qualquer linha para abrir o comprovante</p>
+
+    <div class="note"><span class="h">Sobre esta página pública</span>Códigos de reserva e PINs foram ocultados aqui de propósito — os comprovantes completos estão numa pasta privada do OneDrive, acessível pelos links desta página.</div>
+
+    <div class="scroll">
+      <table>
+        <tr><th>Data</th><th>Trecho ou estadia</th><th>Código</th><th>Arquivo</th></tr>
+        <tr><td>25/8</td><td>CNF → GRU → Madrid · Iberia</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Fernando</a> · <a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Daniele</a></td></tr>
+        <tr><td>26/8</td><td>Atocha 16:00 → Sevilha 18:42 · Renfe AVE</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>26–29/8</td><td>Hotel Legado Magdalena · Sevilha</td><td>ver documento</td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>29/8</td><td>Sevilha 10:37 → Atocha 13:16 · Ouigo</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>29–31/8</td><td>7 Islas Hotel · Madrid</td><td>····</td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>31/8</td><td>Atocha 11:22 → Sants 14:39 · iryo</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>31/8–3/9</td><td>Yurbban Trafalgar · Barcelona</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>3/9</td><td>Barcelona 12:00 → Mahón 13:00 · Ryanair</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>3–8/9</td><td>Carro MG3 automático · CarrerasCenter</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">reserva</a> · <a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">pagto</a></td></tr>
+        <tr><td>3–8/9</td><td>Hotel Bahía · Cala Santandría</td><td>····</td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>8/9</td><td>Mahón 09:05 → Barcelona 10:00 · Ryanair</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">abrir</a></td></tr>
+        <tr><td>8–9/9</td><td>Barcelona → Madrid → GRU → CNF · Iberia</td><td><code>····</code></td><td><a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Fernando</a> · <a href="https://1drv.ms/ONEDRIVE-LINK-PENDENTE" target="_blank">Daniele</a></td></tr>
+      </table>
+    </div>
+
+    <h2 class="title serif" style="margin-top:44px">Contatos</h2>
+    <div class="contact">
+      <table>
+        <tr><td>Emergências · toda a Europa</td><td><b>112</b></td></tr>
+        <tr><td>7 Islas Hotel · Madrid</td><td>+34 915 23 46 88</td></tr>
+        <tr><td>Carro · CarrerasCenter</td><td>WhatsApp +34 667 36 92 66<br>+34 671 01 37 72<br>info@cochesmenorca.es</td></tr>
+        <tr><td>Booking.com · 24h, do exterior</td><td>+44 20 3320 2609</td></tr>
+      </table>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="f-orn"></div>
+  <div class="sig serif">Que seja a primeira de muitas.</div>
+  <div>Roteiro montado a partir dos documentos em<br><i>OneDrive › PESSOAL › VIAGEM ESPANHA</i></div>
+  <div style="margin-top:16px;opacity:.65;font-size:.74rem">
+    Confira horários e ingressos nos sites oficiais antes de viajar.<br>
+    Fotografias: Wikimedia Commons, sob licenças livres.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var alvo = new Date(2026, 7, 25);           // 25 de agosto de 2026
+  var volta = new Date(2026, 8, 9);           // 9 de setembro de 2026
+  var hoje = new Date(); hoje.setHours(0,0,0,0);
+  var dias = Math.round((alvo - hoje) / 86400000);
+  var el = document.getElementById('cd');
+  if (dias > 1)       el.innerHTML = 'Faltam <b>' + dias + ' dias</b> para a viagem';
+  else if (dias === 1) el.innerHTML = '<b>Amanhã</b> vocês embarcam';
+  else if (dias === 0) el.innerHTML = '<b>É hoje.</b> Boa viagem!';
+  else if (hoje <= volta) el.innerHTML = '<b>Vocês estão na Espanha.</b> Aproveitem cada minuto.';
+  else el.innerHTML = 'Sevilha · Madrid · Barcelona · Menorca';
+})();
+
+document.addEventListener('toggle', function(e){
+  if(e.target.matches && e.target.matches('details.spot-media') && e.target.open){
+    var ifr = e.target.querySelector('iframe[data-src]');
+    if(ifr){ ifr.src = ifr.dataset.src; ifr.removeAttribute('data-src'); }
+  }
+}, true);
+</script>
+
+</body>
+</html>
