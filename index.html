@@ -18,7 +18,7 @@
 <header class="site-header">
   <div class="inner">
     <a class="brand" href="#top">Fernando <b>&amp;</b> Daniele</a>
-    <nav class="site-nav">
+    <nav class="site-nav" id="site-nav">
       <a href="#antes">Antes de ir</a>
       <a href="#ida">Ida</a>
       <a href="#sevilha">Sevilha</a>
@@ -29,11 +29,14 @@
       <a href="#reservas">Reservas</a>
     </nav>
     <span class="header-countdown mono" id="cd">—</span>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
 <div class="hero" id="top">
-  <img src="roteiro-assets/hero-plaza-espana.jpg" alt="Plaza de España, Sevilha">
+  <img src="roteiro-assets/hero-plaza-espana-twilight.jpg" alt="Plaza de España ao entardecer, Sevilha">
   <div class="hero-in">
     <span class="kicker">Lua de mel</span>
     <h1>España</h1>
@@ -42,12 +45,6 @@
     <div class="when">25.08 — 09.09.2026 · Sevilha → Madrid → Barcelona → Menorca</div>
   </div>
   <div class="scrolldown"></div>
-</div>
-
-<div class="wrap">
-  <div class="intro">
-    <p class="drop">Dezesseis dias, quatro cidades e um mar. Dos pátios mouriscos de Sevilha às torres de Gaudí, terminando numa ilha onde a água é impossivelmente azul — este é o caminho que vocês vão percorrer juntos.</p>
-  </div>
 </div>
 
 <main id="app"></main>
