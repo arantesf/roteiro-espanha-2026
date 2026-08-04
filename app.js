@@ -77,6 +77,7 @@
       );
       body.appendChild(a);
     }
+    if (item.docs && item.docs.length) body.appendChild(blockDocs(item.docs));
     content.appendChild(body);
     if (item.img) {
       content.appendChild(el("img", { class: "thumb", src: item.img, alt: item.imgAlt || "", loading: "lazy" }));

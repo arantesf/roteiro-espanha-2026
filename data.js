@@ -705,11 +705,18 @@ var ITINERARY = {
     { "titleHtml": "Barcelona · Sants", "kind": "Estação de trem", "lat": 41.3790121, "lon": 2.1399602 },
     { "titleHtml": "Aeroporto de Barcelona-El Prat", "kind": "Aeroporto", "lat": 41.296944, "lon": 2.0790474 }
    ],
-   "preItems": [],
+   "preItems": [
+    {
+     "type": "note",
+     "kind": "good",
+     "heading": "Mapa dos restaurantes",
+     "bodyHtml": "Os endereços de comida da cidade estão todos marcados neste mapa — abram no celular na hora de decidir onde parar.<br/><a class=\"doc\" href=\"https://www.google.com/maps/d/u/0/viewer?mid=1DV_uQB-RuZrGZkaG2UtC3J9lveWmP1A&amp;ll=41.3890857106227%2C2.180481453674581&amp;z=14\" target=\"_blank\" rel=\"noopener\">Abrir o mapa dos restaurantes</a>"
+    }
+   ],
    "days": [
     {
      "dnum": "Seg 31/8",
-     "dttl": "Madrid → Barcelona",
+     "dttl": "Madrid → Barcelona · sem rumo",
      "open": false,
      "items": [
       {
@@ -724,39 +731,69 @@ var ITINERARY = {
       },
       {
        "type": "note",
-       "kind": "warn",
-       "heading": "Almoço apertado",
-       "bodyHtml": "O trem chega à Sants às 14:39 — já perto do horário em que muitas cozinhas fecham para o almoço (~15h30-16h). Comam algo rápido na própria estação ou levem o almoço para o hotel antes de sair para caminhar."
+       "kind": "plain",
+       "heading": "Se chegarem com fome",
+       "bodyHtml": "O trem chega às 14:39, quando quase toda cozinha de Barcelona já está fechando (por volta das 15h30-16h). Duas saídas, se não quiserem gastar a tarde sentados: as <b>bancas de comida da própria Boqueria</b>, que é a primeira parada do percurso, ou o <b>Bar Cañete</b>, na Carrer de la Unió 17, a três minutos dali — serve sem interrupção das 13h à meia-noite, o que o torna raro nesta cidade. Vale guardar o endereço para qualquer dia em que a fome pegar vocês fora de hora."
+      },
+      {
+       "type": "leg",
+       "kind": "transit",
+       "icon": "🚕",
+       "title_html": "Sants → hotel · táxi",
+       "meta_html": "Cerca de 15 minutos, uns 15 €. Com as malas não vale a pena encarar as escadas do metrô."
+      },
+      {
+       "type": "note",
+       "kind": "good",
+       "heading": "O programa é não ter programa",
+       "bodyHtml": "Os horários abaixo são só referência — o plano do dia é se perder. O percurso é uma linha reta de oeste para leste, da Rambla até o mar: Boqueria, Gòtic, Born, Ciutadella, Barceloneta. Menos de 5 km no total, tudo a pé, e cada bairro emenda no seguinte sem precisar voltar atrás. Entrem na praça que aparecer, sentem no bar que estiver com jeito bom, e cheguem à praia a tempo do pôr do sol."
       },
       {
        "type": "p",
-       "html": "<b>Tarde e noite</b> — o hotel fica na borda do Born, o melhor bairro da cidade para caminhar:"
+       "html": "<b>Tarde e noite</b> — atravessando a cidade velha da Rambla até o mar:"
       },
       {
        "type": "spots",
        "items": [
         {
-         "time": "15:30",
+         "time": "15:45",
          "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>El Born</b>",
+         "titleHtml": "<b>La Boqueria</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Santa Maria del Mar, a catedral gótica construída pelos estivadores do porto · Passeig del Born · Mercat del Born.",
-         "mapsQuery": "El Born Barcelona",
-         "img": "roteiro-assets/bcn-born.jpg",
-         "imgAlt": "El Born, Barcelona",
-         "lat": 41.3848426,
-         "lon": 2.1828745
+         "descHtml": "Ponto de partida, na Rambla. O portão de ferro e vitral de 1914 e o mar de bancas debaixo da estrutura metálica. Se a fome apertar, as bancas de comida do fundo servem no balcão.",
+         "mapsQuery": "Mercat de la Boqueria Barcelona",
+         "img": "roteiro-assets/bcn-boqueria.jpg",
+         "imgAlt": "Mercat de la Boqueria, Barcelona",
+         "lat": 41.381736,
+         "lon": 2.1715515
+        },
+        {
+         "time": "16:30",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Plaça Reial</b>",
+         "tag": "grátis",
+         "tagClasses": [
+          "tag",
+          "free"
+         ],
+         "descHtml": "Descendo a Rambla, a praça de palmeiras e arcadas feita para parecer italiana. As duas luminárias de ferro são obra de estudante do Gaudí — o primeiro trabalho pago dele na cidade, com capacetes alados de Mercúrio no topo. De dia dá para ver o desenho delas; de noite, só a silhueta.",
+         "mapsQuery": "Plaça Reial Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.3800594,
+         "lon": 2.1751349
         },
         {
          "time": "17:00",
          "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>Bairro Gòtic</b>",
+         "titleHtml": "<b>Barri Gòtic</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Catedral de Barcelona, Plaça Reial e o Pont del Bisbe. À noite, com as luzes amareladas, é outro lugar.",
+         "descHtml": "Da Plaça Reial para dentro do labirinto: Catedral de Barcelona, o Pont del Bisbe e a Plaça de Sant Felip Neri, com as marcas de bomba da Guerra Civil na parede da igreja. É onde vale mais errar o caminho do que acertar.",
          "mapsQuery": "Barri Gòtic Barcelona",
          "img": "roteiro-assets/bcn-gotic.jpg",
          "imgAlt": "Carrer dels Arcs, Barri Gòtic",
@@ -764,20 +801,71 @@ var ITINERARY = {
          "lon": 2.1757919
         },
         {
-         "time": "20:30",
+         "time": "18:15",
          "tbd": false,
-         "category": "meal",
-         "titleHtml": "<b>Jantar</b>",
+         "category": "plain",
+         "titleHtml": "<b>El Born</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "El Xampanyet — cava e tapas em pé, clássico absoluto do Born desde 1929.",
-         "mapsQuery": "El Xampanyet Barcelona",
-         "img": "roteiro-assets/bcn-xampanyet.jpg",
-         "imgAlt": "El Xampanyet, Barcelona",
-         "lat": 41.3845086,
-         "lon": 2.1816748
+         "descHtml": "Atravessando a Via Laietana. Santa Maria del Mar, a catedral gótica construída pelos estivadores do porto · Passeig del Born · Carrer Montcada, a rua dos palácios medievais onde hoje mora o Museu Picasso. O hotel fica na borda deste bairro.",
+         "mapsQuery": "El Born Barcelona",
+         "img": "roteiro-assets/bcn-born.jpg",
+         "imgAlt": "El Born, Barcelona",
+         "lat": 41.3848426,
+         "lon": 2.1828745
+        },
+        {
+         "time": "19:15",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Parc de la Ciutadella</b>",
+         "tag": "grátis",
+         "tagClasses": [
+          "tag",
+          "free"
+         ],
+         "descHtml": "A dez minutos do hotel, com a cascata monumental em que o jovem Gaudí trabalhou como estudante. O Umbracle de madeira, os barquinhos no lago e o gramado onde a cidade inteira deita no fim de tarde.",
+         "mapsQuery": "Parc de la Ciutadella Barcelona",
+         "img": "roteiro-assets/bcn-ciutadella.jpg",
+         "imgAlt": "Cascata do Parc de la Ciutadella",
+         "lat": 41.388416,
+         "lon": 2.1862546
+        },
+        {
+         "time": "20:00",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Barceloneta</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Saindo da Ciutadella, o Passeig Joan de Borbó desemboca direto na praia. Bairro de pescadores até os anos 90, ainda com as ruas estreitíssimas do desenho original. Cerveja de chiringuito, pés na água, e o pôr do sol às 20h13 — cheguem antes.",
+         "mapsQuery": "Barceloneta Barcelona",
+         "img": "roteiro-assets/bcn-barceloneta.jpg",
+         "imgAlt": "Praia da Barceloneta",
+         "lat": 41.3821171,
+         "lon": 2.1854822
+        },
+        {
+         "time": "21:30",
+         "tbd": false,
+         "category": "meal",
+         "titleHtml": "<b>Jantar de volta</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Na volta da praia para o hotel, o <b>Bormuth</b>, na Carrer del Rec 31, já no Born — tapas sem cerimônia, abre todos os dias, e fica a cinco minutos da cama. Se preferirem não sair da Barceloneta, o <b>El Vaso de Oro</b>, na Carrer de Balboa, é uma cervejaria estreita como um vagão de trem, com garçons de paletó branco.",
+         "mapsQuery": "Bormuth Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.3855283,
+         "lon": 2.1829818
         }
        ]
+      },
+      {
+       "type": "note",
+       "kind": "warn",
+       "heading": "A Boqueria numa segunda à tarde",
+       "bodyHtml": "É a versão fraca dela mesma: o mercado abre das 8h às 20h30, mas segunda é o dia em que boa parte das bancas de peixe nem levanta a portinhola — não houve pesca no domingo — e muita gente fecha depois das 15h. Vão pelo portão de vitral, pelo teto de ferro e pelo tamanho da coisa, não pelas fotos de banca cheia. O mercado de verdade de vocês é o Santa Caterina, na quarta.<br/><br/>E podem riscar o <b>El Xampanyet</b> da lista: tira férias o mês de agosto inteiro."
       },
       {
        "type": "note",
@@ -789,34 +877,52 @@ var ITINERARY = {
     },
     {
      "dnum": "Ter 1/9",
-     "dttl": "O dia de Gaudí",
+     "dttl": "Gaudí, o Passeig e o mar",
      "open": false,
      "items": [
+      {
+       "type": "note",
+       "kind": "good",
+       "heading": "Só a Sagrada Família por dentro",
+       "bodyHtml": "A decisão de ver a Casa Batlló e a Pedrera só por fora é a certa. As duas juntas custariam uns 80 € por pessoa, e a fachada — que é o que faz o quarteirão — não cobra nada. Sobra a manhã inteira para descer o Passeig de Gràcia devagar, e a tarde para a siesta que o dia de ontem não teve."
+      },
       {
        "type": "spots",
        "items": [
         {
-         "time": "07:15",
+         "time": "07:30",
          "tbd": false,
          "category": "meal",
          "titleHtml": "<b>Café da manhã</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Dia mais madrugador da viagem — a Sagrada Família abre 9h e vale chegar cedo, então acordem por volta das 6h30.",
+         "descHtml": "Sem correria — a entrada é só às 9h45.",
          "mapsQuery": null,
          "img": null,
          "imgAlt": null
         },
         {
-         "time": "08:30",
+         "time": "08:50",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Saída do hotel</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Metrô L4 de Urquinaona até Verdaguer, troca para a L5 e desce na Sagrada Família — uns 15 minutos. A pé pelo Eixample são 25 minutos, e de manhã cedo a caminhada é agradável.",
+         "mapsQuery": null,
+         "img": null,
+         "imgAlt": null
+        },
+        {
+         "time": "09:45",
          "tbd": false,
          "category": "plain",
          "titleHtml": "<b>Sagrada Família</b>",
-         "tag": "reservar",
+         "tag": "ingresso comprado",
          "tagClasses": [
           "tag"
          ],
-         "descHtml": "Pegue o ingresso <b>com subida às torres</b> — a da Natividade tem a melhor vista. Vá cedo ou no fim da tarde, quando o sol acende os vitrais laranja de um lado e azuis do outro.",
+         "descHtml": "Entrada pela fachada da Natividade, na Carrer de la Marina — cheguem por volta das 9h30. Sem subida às torres, a visita leva uma hora e pouco. Entrem pela Natividade e saiam pela Paixão: é a ordem em que Gaudí quis que a história fosse lida. Por volta das 10h30 o sol acende os vitrais laranja de um lado e azuis do outro.",
          "mapsQuery": "Sagrada Família Barcelona",
          "img": "roteiro-assets/bcn-sagrada.jpg",
          "imgAlt": "Interior da Sagrada Família",
@@ -824,31 +930,16 @@ var ITINERARY = {
          "lon": 2.1744283
         },
         {
-         "time": "11:30",
+         "time": "11:45",
          "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>Casa Batlló</b>",
-         "tag": "reservar",
+         "titleHtml": "<b>Casa Milà · por fora</b>",
+         "tag": "grátis",
          "tagClasses": [
-          "tag"
+          "tag",
+          "free"
          ],
-         "descHtml": "O interior mais impressionante de todo o Gaudí civil. A fachada é o dragão de São Jorge.",
-         "mapsQuery": "Casa Batlló Barcelona",
-         "img": "roteiro-assets/bcn-batllo.jpg",
-         "imgAlt": "Fachada da Casa Batlló",
-         "lat": 41.3915446,
-         "lon": 2.1646961
-        },
-        {
-         "time": "13:30",
-         "tbd": false,
-         "category": "plain",
-         "titleHtml": "<b>La Pedrera (Casa Milà)</b>",
-         "tag": "reservar",
-         "tagClasses": [
-          "tag"
-         ],
-         "descHtml": "Pelo terraço com as chaminés-guerreiras. A sessão noturna é feita para casal.",
+         "descHtml": "Vinte minutos a pé pela Provença, ou uma parada de L5 até Diagonal. A fachada de pedra ondulada não tem uma linha reta e os balcões de ferro retorcido foram forjados um a um. Da calçada da esquina dá para ver as chaminés-guerreiras do terraço espiando por cima da cornija.",
          "mapsQuery": "La Pedrera Casa Milà Barcelona",
          "img": "roteiro-assets/bcn-pedrera.jpg",
          "imgAlt": "La Pedrera, Casa Milà",
@@ -856,67 +947,130 @@ var ITINERARY = {
          "lon": 2.1617621
         },
         {
-         "time": "14:45",
+         "time": "12:15",
          "tbd": false,
-         "category": "meal",
-         "titleHtml": "<b>Almoço</b>",
+         "category": "plain",
+         "titleHtml": "<b>Passeig de Gràcia</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Pelas redondezas da Pedrera, no Eixample — em Barcelona as cozinhas costumam fechar entre 15h30 e 16h, então esse é praticamente o último horário confortável.",
-         "mapsQuery": "Eixample Barcelona restaurants",
+         "descHtml": "A avenida mais bem vestida da Espanha, descida sem pressa. Reparem em duas coisas: as luminárias-banco de Pere Falqués, em ferro e mosaico, e a calçada — o ladrilho hexagonal com estrelas-do-mar e algas é desenho do próprio Gaudí, pisado por todo mundo o dia inteiro.",
+         "mapsQuery": "Passeig de Gràcia Barcelona",
          "img": null,
          "imgAlt": null,
-         "lat": 41.3896369,
-         "lon": 2.1466336
+         "lat": 41.3930519,
+         "lon": 2.1650161
         },
         {
-         "time": "17:00",
+         "time": "12:45",
          "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>Park Güell</b>",
-         "tag": "reservar",
-         "tagClasses": [
-          "tag"
-         ],
-         "descHtml": "A zona monumental é paga e com horário marcado. O banco ondulado de mosaico é o cartão-postal.",
-         "mapsQuery": "Park Güell Barcelona",
-         "img": "roteiro-assets/bcn-guell.jpg",
-         "imgAlt": "Terraço do Park Güell",
-         "lat": 41.4142348,
-         "lon": 2.1524576
-        },
-        {
-         "time": "19:45",
-         "tbd": false,
-         "category": "plain",
-         "titleHtml": "<b>Bunkers del Carmel</b>",
+         "titleHtml": "<b>Casa Batlló · por fora</b>",
          "tag": "grátis",
          "tagClasses": [
           "tag",
           "free"
          ],
-         "descHtml": "Antigas baterias antiaéreas da Guerra Civil. O melhor pôr do sol da cidade, 360° — levem algo para beber.",
-         "mapsQuery": "Bunkers del Carmel Barcelona",
-         "img": "roteiro-assets/bcn-bunkers.jpg",
-         "imgAlt": "Vista dos Bunkers del Carmel",
-         "lat": 41.4193923,
-         "lon": 2.1616974
+         "descHtml": "A fachada é o dragão de São Jorge: o telhado é o lombo escamado, a torrezinha é a lança cravada, e as varandas são caveiras. Na mesma quadra estão a Casa Amatller, de Puig i Cadafalch, e a Casa Lleó Morera, de Domènech i Montaner — três arquitetos rivais lado a lado, o que rendeu ao quarteirão o apelido de <i>Illa de la Discòrdia</i>.",
+         "mapsQuery": "Casa Batlló Barcelona",
+         "img": "roteiro-assets/bcn-batllo.jpg",
+         "imgAlt": "Fachada da Casa Batlló",
+         "lat": 41.3915446,
+         "lon": 2.1646961
+        },
+        {
+         "time": "13:00",
+         "tbd": false,
+         "category": "meal",
+         "titleHtml": "<b>Almoço no Eixample</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Tapas 24, na Carrer de la Diputació 269, a três minutos da Batlló — o bar de tapas do Carles Abellán, com o <i>bikini</i> de trufa que ficou famoso. Alternativa a cinco minutos: a Cervecería Catalana, na Mallorca 236. Nenhum dos dois aceita reserva; chegar às 13h em ponto é o truque para não pegar fila.",
+         "mapsQuery": "Tapas 24 Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.3903,
+         "lon": 2.1663
+        },
+        {
+         "time": "15:00",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Palau de la Música Catalana</b>",
+         "tag": "grátis",
+         "tagClasses": [
+          "tag",
+          "free"
+         ],
+         "descHtml": "Vinte minutos a pé descendo até a Plaça Catalunya e entrando na Via Laietana. Vale contornar o quarteirão inteiro: a esquina de Sant Pere Més Alt tem o grupo escultórico da canção popular catalã, e as colunas da varanda são todas diferentes umas das outras, forradas de mosaico floral. É a obra-prima do modernismo que não é do Gaudí.",
+         "mapsQuery": "Palau de la Música Catalana Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.3875426,
+         "lon": 2.1752968
+        },
+        {
+         "time": "15:45",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Siesta e piscina</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "O Palau fica a cinco minutos do hotel. Fim de tarde no terraço, sem relógio — é o que faz a noite render.",
+         "mapsQuery": null,
+         "img": null,
+         "imgAlt": null
+        },
+        {
+         "time": "19:15",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Barceloneta outra vez</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "L4 de Urquinaona direto até a Barceloneta, ou 25 minutos a pé cortando o Born e a Ciutadella. Passeio pelo Passeig Marítim, pés na água, pôr do sol às 20h09.",
+         "mapsQuery": "Passeig Marítim de la Barceloneta",
+         "img": "roteiro-assets/bcn-barceloneta.jpg",
+         "imgAlt": "Praia da Barceloneta",
+         "lat": 41.3789334,
+         "lon": 2.1926509
+        },
+        {
+         "time": "21:00",
+         "tbd": false,
+         "category": "meal",
+         "titleHtml": "<b>Jantar romântico</b>",
+         "tag": "reservar",
+         "tagClasses": [
+          "tag"
+         ],
+         "descHtml": "Can Solé, na Carrer de Sant Carles — casa de arrozes desde 1903, paredes cobertas de fotos e o melhor <i>arròs a banda</i> do bairro. Se quiserem pé na areia em vez de sala antiga, o Barraca fica no Passeig Marítim, de frente para o mar. Os dois pedem reserva.",
+         "mapsQuery": "Can Solé Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.3789,
+         "lon": 2.1893
         }
        ]
       },
       {
        "type": "note",
        "kind": "plain",
-       "heading": "Não exagerem",
-       "bodyHtml": "Quatro Gaudí no mesmo dia não funciona. Sagrada Família mais um dos outros já enche a agenda com folga."
+       "heading": "O sol se põe atrás da cidade",
+       "bodyHtml": "A praia de Barcelona olha para o sul, então não esperem o sol mergulhando no mar — o que se vê é a luz dourada batendo de lado nos prédios e no Hotel W. O espetáculo sobre a água aqui é o nascer do sol, não o poente."
       }
      ]
     },
     {
      "dnum": "Qua 2/9",
-     "dttl": "Mar, mercado e montanha",
+     "dttl": "Do mercado ao alto da cidade",
      "open": false,
      "items": [
+      {
+       "type": "note",
+       "kind": "good",
+       "heading": "O dia mais cheio — e o táxi é o que o faz caber",
+       "bodyHtml": "Tibidabo, Park Güell e Bunkers ficam todos na parte alta, mas não se ligam entre si: de transporte público, cada emenda seria uns 50 minutos com baldeação. De táxi, cada trecho cai para 20-25 minutos e uns 20 €. São três corridas no dia — é o que transforma a maratona em passeio."
+      },
       {
        "type": "spots",
        "items": [
@@ -924,10 +1078,10 @@ var ITINERARY = {
          "time": "08:00",
          "tbd": false,
          "category": "meal",
-         "titleHtml": "<b>Café da manhã</b>",
+         "titleHtml": "<b>Café no hotel</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "A Boqueria enche rápido de manhã — saiam do café direto para lá.",
+         "descHtml": "Sem pressa — o parque só abre às 11h.",
          "mapsQuery": null,
          "img": null,
          "imgAlt": null
@@ -936,73 +1090,192 @@ var ITINERARY = {
          "time": "09:00",
          "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>La Boqueria</b>",
+         "titleHtml": "<b>Mercat de Santa Caterina</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Na Rambla. Vão antes das dez — depois vira multidão.",
-         "mapsQuery": "Mercat de la Boqueria Barcelona",
-         "img": "roteiro-assets/bcn-boqueria.jpg",
-         "imgAlt": "Mercat de la Boqueria, Barcelona",
-         "lat": 41.381736,
-         "lon": 2.1715515
+         "descHtml": "Cinco minutos a pé do hotel, sob o telhado ondulado de 325 mil peças de cerâmica colorida do Enric Miralles. É o mercado de bairro que a Boqueria deixou de ser: peixe, embutido, fruta, e nenhum turista. Abre às 7h30.",
+         "mapsQuery": "Mercat de Santa Caterina Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.3866028,
+         "lon": 2.1766466
         },
         {
-         "time": "10:30",
+         "time": "09:30",
          "tbd": false,
-         "category": "plain",
-         "titleHtml": "<b>Montjuïc</b>",
+         "category": "meal",
+         "titleHtml": "<b>Montar as duas marmitas</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Teleférico e o castelo — o Fundació Miró fica dentro se topar museu. À noite, a Fonte Mágica, confiram os dias de show antes de subir.",
-         "mapsQuery": "Montjuïc Barcelona",
-         "img": "roteiro-assets/bcn-montjuic.jpg",
-         "imgAlt": "Teleférico de Montjuïc",
-         "lat": 41.3631512,
-         "lon": 2.1656148
+         "descHtml": "Comprem para <b>duas</b> refeições, não uma: o almoço no Tibidabo e o pôr do sol nos Bunkers. Pão, jamón, queijo, tomate, fruta e água — e vinho ou cerveja em <b>lata ou plástico</b>, porque vidro não entra no parque. O Bar Joan, dentro do mercado, faz bocadillo na hora se preferirem pronto.",
+         "mapsQuery": null,
+         "img": null,
+         "imgAlt": null
+        }
+       ]
+      },
+      {
+       "type": "leg",
+       "kind": "transit",
+       "icon": "🚡",
+       "title_html": "10:15 · Hotel → Tibidabo",
+       "meta_html": "Táxi até a <b>Plaça Doctor Andreu</b>, uns 25 minutos. De lá, o Funicular Cuca de Llum sobe em 4 minutos — está incluso no ingresso, basta encostar o QR do voucher na catraca."
+      },
+      {
+       "type": "spots",
+       "items": [
+        {
+         "time": "11:00",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Tibidabo</b>",
+         "tag": "ingresso comprado",
+         "tagClasses": [
+          "tag"
+         ],
+         "descHtml": "Parque de diversões de 1901 no ponto mais alto da cidade, 512 metros acima do mar. Comecem pelo <b>Temple del Sagrat Cor</b> e pelo mirante, antes de a fila do elevador crescer — a vista alcança o Montseny em dia limpo. Localizador <code>····</code>",
+         "mapsQuery": "Tibidabo Barcelona",
+         "docs": [
+          { "label": "Ingresso Tibidabo", "href": "https://1drv.ms/b/c/dfc0e3ec82870a78/IQBR6M-RPL0CQYH5LnJRancFAQCO7Ist6wALWXtb3N-D1zo?e=2xNoL4" }
+         ],
+         "img": "roteiro-assets/bcn-tibidabo.jpg",
+         "imgAlt": "Parque de diversões do Tibidabo",
+         "lat": 41.4231527,
+         "lon": 2.1199381
+        },
+        {
+         "time": "11:45",
+         "tbd": false,
+         "category": "activity",
+         "titleHtml": "<b>Muntanya Russa</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "A montanha-russa, e vão nela primeiro — é a de fila mais longa e às 11h45 ainda não formou. Passa dos 80 km/h correndo por dentro da mata a 500 metros de altitude, e nas curvas de fora a cidade inteira aparece embaixo. Se sobrar tempo no fim da tarde, repitam: a segunda volta é a que dá para olhar a paisagem.",
+         "mapsQuery": null,
+         "img": null,
+         "imgAlt": null
+        },
+        {
+         "time": "12:15",
+         "tbd": false,
+         "category": "activity",
+         "titleHtml": "<b>Os clássicos</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "O ingresso dá acesso ilimitado a tudo. Os imperdíveis são os antigos: o <b>Avió</b> de 1928, réplica do primeiro voo Barcelona-Madrid, que gira no vazio com a cidade embaixo; a <b>Talaia</b>, o braço giratório de 1921; o <b>Museu dels Autòmats</b>, com máquinas de feira de mais de cem anos; o <b>Krüeger</b>, a casa de terror; e o <b>Diavolo</b>, para fechar.",
+         "mapsQuery": null,
+         "img": null,
+         "imgAlt": null
         },
         {
          "time": "13:30",
          "tbd": false,
          "category": "meal",
-         "titleHtml": "<b>Barceloneta — almoço e praia</b>",
+         "titleHtml": "<b>Piquenique no parque</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Paella à beira-mar antes que as cozinhas fechem (por volta das 15h30-16h), depois praia e tempo livre no bairro dos pescadores até os anos 90.",
-         "mapsQuery": "Barceloneta Barcelona",
-         "img": "roteiro-assets/bcn-barceloneta.jpg",
-         "imgAlt": "Praia da Barceloneta",
-         "lat": 41.3821171,
-         "lon": 2.1854822
+         "descHtml": "O que veio do mercado, com Barcelona inteira de plano de fundo — muito melhor do que a comida do parque, que é o que se espera de parque de diversões. Uma regra só: comida de fora vale exclusivamente na <b>zona de piquenique sinalizada</b>, no nível 6. Nas mesas dos restaurantes do parque não deixam.",
+         "mapsQuery": null,
+         "img": null,
+         "imgAlt": null
         },
         {
-         "time": "17:30",
+         "time": "14:30",
          "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>Parc de la Ciutadella</b>",
+         "titleHtml": "<b>Camí del Cel</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "A dez minutos do hotel, com a cascata monumental em que o jovem Gaudí trabalhou.",
-         "mapsQuery": "Parc de la Ciutadella Barcelona",
-         "img": "roteiro-assets/bcn-ciutadella.jpg",
-         "imgAlt": "Cascata do Parc de la Ciutadella",
-         "lat": 41.388416,
-         "lon": 2.1862546
+         "descHtml": "A parte de cima do parque, com os miradouros voltados para o mar de um lado e para a serra de Collserola do outro. Última hora antes de descer — e a chance de repetir a montanha-russa.",
+         "mapsQuery": null,
+         "img": null,
+         "imgAlt": null
         },
         {
-         "time": "alterna- tiva",
-         "tbd": true,
+         "time": "15:45",
+         "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>Tibidabo</b>",
+         "titleHtml": "<b>Descida · vermute no Mirablau</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Parque de diversões de 1901 no ponto mais alto da cidade, com a igreja do Sagrat Cor ao lado — troca o dia todo, não encaixa junto com o resto.",
-         "mapsQuery": "Tibidabo Barcelona",
-         "img": "roteiro-assets/bcn-tibidabo.jpg",
-         "imgAlt": "Parque de diversões do Tibidabo",
-         "lat": 41.4231527,
-         "lon": 2.1199381
+         "descHtml": "O funicular volta à Plaça Doctor Andreu, e ali mesmo o Mirablau tem uma parede inteira de vidro sobre Barcelona. É bar, não restaurante — parada de meia hora, um vermute e a vista, sem sentar para comer. Às 16h30 o táxi tem que sair, porque a faixa do Park Güell não espera.",
+         "mapsQuery": "Mirablau Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.4136,
+         "lon": 2.129
         }
        ]
+      },
+      {
+       "type": "leg",
+       "kind": "transit",
+       "icon": "🚕",
+       "title_html": "16:30 · Tibidabo → Park Güell",
+       "meta_html": "Táxi, 20 a 25 minutos. A entrada é marcada para as 17h e o acesso é por faixa horária — não dá para chegar depois."
+      },
+      {
+       "type": "spots",
+       "items": [
+        {
+         "time": "17:00",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Park Güell</b>",
+         "tag": "ingresso comprado",
+         "tagClasses": [
+          "tag"
+         ],
+         "descHtml": "Era para ter sido um condomínio de luxo que faliu com duas casas vendidas — e virou o parque mais fotografado da Europa. O banco ondulado de <i>trencadís</i> na praça superior, a sala hipóstila com as colunas tortas embaixo, o dragão da escadaria. A zona monumental fecha às 19h30, então há tempo de sobra.",
+         "mapsQuery": "Park Güell Barcelona",
+         "docs": [
+          { "label": "Ingresso Park Güell", "href": "https://1drv.ms/b/c/dfc0e3ec82870a78/IQAJmjocVUIpRpFgPlUXbh15AaIC4EEPQ6dJqDMIsWsJKPw?e=xmqHUW" }
+         ],
+         "img": "roteiro-assets/bcn-guell.jpg",
+         "imgAlt": "Terraço do Park Güell",
+         "lat": 41.4142348,
+         "lon": 2.1524576
+        },
+        {
+         "time": "19:00",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Bunkers del Carmel</b>",
+         "tag": "grátis",
+         "tagClasses": [
+          "tag",
+          "free"
+         ],
+         "descHtml": "Mais dez minutos de táxi (a pé são 25 de ladeira forte, no fim de um dia longo). Antigas baterias antiaéreas da Guerra Civil, hoje a melhor vista 360° da cidade: Sagrada Família, Torre Glòries, o mar e Montjuïc de uma vez só. Aqui entra a <b>segunda marmita do mercado</b> — todo mundo sobe com alguma coisa para comer e beber, é o costume do lugar. Pôr do sol às 20h05; cheguem antes para pegar lugar no muro.",
+         "mapsQuery": "Bunkers del Carmel Barcelona",
+         "img": "roteiro-assets/bcn-bunkers.jpg",
+         "imgAlt": "Vista dos Bunkers del Carmel",
+         "lat": 41.4193923,
+         "lon": 2.1616974
+        },
+        {
+         "time": "21:30",
+         "tbd": false,
+         "category": "meal",
+         "titleHtml": "<b>Jantar · La Pepita</b>",
+         "tag": "reservar",
+         "tagClasses": [
+          "tag"
+         ],
+         "descHtml": "Carrer de Còrsega 343, na descida dos Bunkers para Gràcia. Tapas criativas — a bomba de batata com molho picante, o brioche de rabo de boi — e as paredes inteiramente rabiscadas à mão pelos clientes, camada sobre camada. Cozinha até meia-noite, aberto todos os dias. Se quiserem algo mais tradicional, a <b>Bodega Quimet</b> e a <b>La Pubilla</b> ficam nas praças de Gràcia, dez minutos dali.",
+         "mapsQuery": "La Pepita Barcelona",
+         "img": null,
+         "imgAlt": null,
+         "lat": 41.3993541,
+         "lon": 2.1568429
+        }
+       ]
+      },
+      {
+       "type": "note",
+       "kind": "warn",
+       "heading": "Confiram o horário do parque perto da data",
+       "bodyHtml": "Em setembro o Tibidabo abre basicamente aos fins de semana e feriados — o dia 2 é uma das poucas exceções do calendário, e é por isso que o ingresso existe. Ainda assim, vale reconferir em <code>tibidabo.cat</code> na véspera: a abertura costuma ser às 11h, mas o parque muda o horário conforme a temporada. Duas letras miúdas do regulamento: <b>comida de fora só na zona de piquenique</b> do nível 6, e <b>nada de vidro</b> — a garrafa de vinho tem que ser lata, plástico ou fica em casa. E o TibiBus que vem incluso no voucher exige resgate prévio numa bilheteria física; como vocês vão de táxi, ignorem — o funicular é que entra com o QR."
       },
       {
        "type": "p",
