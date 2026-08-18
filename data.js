@@ -135,16 +135,19 @@ var ITINERARY = {
          "imgAlt": null
         },
         {
-         "time": "09:30",
+         "time": "10:00",
          "tbd": false,
          "category": "plain",
          "titleHtml": "<b>Real Alcázar</b>",
-         "tag": "reservar",
+         "tag": "ingresso comprado",
          "tagClasses": [
           "tag"
          ],
          "descHtml": "O ponto alto da cidade — palácio mudéjar ainda em uso pela família real. Vale o ingresso extra do Cuarto Real Alto.",
          "mapsQuery": "Real Alcázar de Sevilla",
+         "docs": [
+          { "label": "Ingresso Real Alcázar", "href": "https://1drv.ms/b/c/dfc0e3ec82870a78/IQCBKDAySlviQaC8hpeGYGpIAU9n3S8TR853Wmis_CB1-HQ?e=7fitbs" }
+         ],
          "img": "roteiro-assets/sevilha-alcazar.jpg",
          "imgAlt": "Real Alcázar, Sevilha",
          "lat": 37.3832105,
@@ -418,10 +421,15 @@ var ITINERARY = {
          "tbd": false,
          "category": "plain",
          "titleHtml": "<b>Metropol Parasol</b>",
-         "tag": null,
-         "tagClasses": [],
+         "tag": "ingresso comprado",
+         "tagClasses": [
+          "tag"
+         ],
          "descHtml": "As \"Setas\" — a maior estrutura de madeira do mundo. Passarela no topo, pôr do sol.",
          "mapsQuery": "Metropol Parasol Sevilla",
+         "docs": [
+          { "label": "Ingresso Las Setas", "href": "https://1drv.ms/b/c/dfc0e3ec82870a78/IQCRybtUsXm1T6g3rPZkKKbyAc7CljFL22_7W3Wuf6MBhs4?e=c6GaOE" }
+         ],
          "img": "roteiro-assets/sevilha-setas.jpg",
          "imgAlt": "Metropol Parasol, Sevilha",
          "lat": 37.3931193,
@@ -497,41 +505,139 @@ var ITINERARY = {
       },
       {
        "type": "p",
-       "html": "<b>Tarde e noite</b> — o hotel fica em Malasaña e tudo abaixo é a pé:"
+       "html": "<b>Tarde e noite</b> — de Atocha ao hotel é táxi (uns 15 minutos). Largam as malas em Malasaña e descem para o centro, também de táxi, que a essa altura vocês já estarão de saco cheio de arrastar mala. O almoço é o ponto de partida do passeio, não uma parada antes dele: dali em diante o dia é inteiro a pé, atravessando o Madri dos Áustrias até o Palácio e terminando em Debod, no pôr do sol. São uns 4 km somados ao longo de sete horas, sempre com a próxima parada à vista."
       },
       {
        "type": "spots",
        "items": [
         {
-         "time": "14:30",
+         "time": "14:15",
          "tbd": false,
          "category": "meal",
-         "titleHtml": "<b>Almoço no Mercado de San Miguel</b>",
-         "tag": null,
-         "tagClasses": [],
-         "descHtml": "O mercado funciona também como almoço — é caro por porção, mas rápido e sem reserva, bom para quem está chegando do trem. Depois, Plaza Mayor e Puerta del Sol, coladas ali do lado.",
-         "mapsQuery": "Mercado de San Miguel Madrid",
-         "img": "roteiro-assets/madrid-sanmiguel.jpg",
-         "imgAlt": "Mercado de San Miguel, Madrid",
-         "lat": 40.4153741,
-         "lon": -3.7090151
+         "titleHtml": "<b>Almoço no Volver</b>",
+         "tag": "4,9 no Google",
+         "tagClasses": [
+          "tag",
+          "tip"
+         ],
+         "descHtml": "Na Calle de la Bolsa, uma travessa curta entre a Puerta del Sol e a Plaza Mayor — duzentos e cinquenta metros de cada uma, ou seja, vocês almoçam já dentro do passeio. Bar de tapas pequeno, 4,9 no Google em setecentas avaliações, e o que aparece em todas elas é o mesmo: tortilla, croquetes de costela, <i>huevos rotos</i>, espetinho de panceta. Uns € 20 a € 30 por pessoa. Abre 13h30 e tem poucas mesas — <b>reservem</b> pelo telefone (+34 915 01 70 71).",
+         "mapsQuery": "Volver Bar de Tapas Madrid",
+         "mapsCid": "1047369851754358030",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.4148452,
+         "lon": -3.7046906
         },
         {
          "time": "16:00",
          "tbd": false,
          "category": "plain",
-         "titleHtml": "<b>Palácio Real</b>",
+         "titleHtml": "<b>Puerta del Sol</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Por fora já impressiona — é o maior palácio real da Europa ocidental.",
-         "mapsQuery": "Palacio Real de Madrid",
-         "img": "roteiro-assets/madrid-palacioreal.jpg",
-         "imgAlt": "Palácio Real de Madrid",
-         "lat": 40.4167403,
-         "lon": -3.7136222
+         "descHtml": "O quilômetro zero da Espanha — todas as estradas do país são medidas a partir de uma placa no chão, em frente à Casa de Correos. Procurem também <i>El Oso y el Madroño</i>, o urso de bronze que é o símbolo da cidade.",
+         "mapsQuery": "Puerta del Sol Madrid",
+         "mapsCid": "7587138583347971705",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.4169473,
+         "lon": -3.7035285
         },
         {
-         "time": "19:45",
+         "time": "16:25",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Plaza Mayor</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Fechada dos quatro lados desde 1619, já foi mercado, praça de touros e palco de execuções da Inquisição. Entrem pelo Arco de Cuchilleros, que é a passagem mais bonita. As mesas da praça cobram caro pelo cenário — a bebida sai melhor nas ruas de trás.",
+         "mapsQuery": "Plaza Mayor Madrid",
+         "mapsCid": "5306995542395525148",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.415511,
+         "lon": -3.7074009
+        },
+        {
+         "time": "16:45",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Mercado de San Miguel</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Uma estrutura de ferro e vidro de 1916, restaurada, a cem metros da Plaza Mayor. Depois do almoço não é lugar de refeição — é de dar uma volta, olhar os balcões de ostra e presunto e, se quiserem, dividir uma taça de vermute em pé.",
+         "mapsQuery": "Mercado de San Miguel Madrid",
+         "mapsCid": "1598750187957883112",
+         "img": "roteiro-assets/madrid-sanmiguel.jpg",
+         "imgAlt": "Mercado de San Miguel, Madrid",
+         "lat": 40.4153755,
+         "lon": -3.7089833
+        },
+        {
+         "time": "17:15",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Plaza de la Villa</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Duzentos metros adiante e o barulho some. Foi a prefeitura de Madri até 2007 e reúne três séculos num só pátio: a Torre de los Lujanes, do século XV, é o prédio civil mais antigo da cidade. É a parada de dois minutos que quase ninguém faz.",
+         "mapsQuery": "Plaza de la Villa Madrid",
+         "mapsCid": "17443685543650418446",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.4152002,
+         "lon": -3.7105431
+        },
+        {
+         "time": "17:40",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Palácio Real e Catedral de la Almudena</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Os dois se encaram do outro lado da mesma praça, então se visitam juntos. O <b>Palácio Real</b> é o maior da Europa ocidental — 3.418 salas — e por fora já entrega o espetáculo; para entrar, a última admissão é uma hora antes do fechamento, então só dá se chegarem antes das 18h. A <b>Almudena</b> ficou 110 anos em obras e por isso é a única catedral espanhola de interior moderno: teto geométrico em cores fortes, nada do gótico escuro que vocês viram em Sevilha. A entrada é por doação de alguns euros, e o contraste entre as duas é justamente a graça de ver as duas na sequência.",
+         "mapsQuery": "Palacio Real de Madrid",
+         "mapsCid": "3350656655825979473",
+         "img": "roteiro-assets/madrid-palacioreal.jpg",
+         "imgAlt": "Palácio Real de Madrid",
+         "lat": 40.417955,
+         "lon": -3.714312
+        },
+        {
+         "time": "19:15",
+         "tbd": false,
+         "category": "plain",
+         "titleHtml": "<b>Plaza de España</b>",
+         "tag": null,
+         "tagClasses": [],
+         "descHtml": "Subida pela Cuesta de San Vicente, uns quinze minutos. A praça foi toda refeita em 2021 e virou um jardim aberto; no centro está o monumento a Cervantes, com Dom Quixote e Sancho Pança em bronze — a foto mais clichê de Madri, e vale mesmo assim.",
+         "mapsQuery": "Plaza de España Madrid",
+         "mapsCid": "2625728932547877739",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.4236051,
+         "lon": -3.7132356
+        },
+        {
+         "time": "19:35",
+         "tbd": false,
+         "category": "meal",
+         "titleHtml": "<b>Rooftop com vista</b> · Nice To Meet You",
+         "tag": "tapas e vinho",
+         "tagClasses": [
+          "tag",
+          "tip"
+         ],
+         "descHtml": "Terraço do Dear Hotel, na esquina da praça com a Gran Vía — 4,7 no Google e a melhor vista da região: dá para o Palácio Real de um lado e para a Gran Vía inteira do outro. Uma hora ali com tapas e uma garrafa de vinho, vendo a luz baixar, e de lá são dez minutos a pé até Debod. Não pede reserva para o bar, mas cheguem antes das 20h para pegar mesa na borda.<br/><br/>O rooftop do <b>Riu Plaza España</b>, do outro lado da praça, é o dos vídeos — tem a passarela de vidro e uma vista melhor, mas cobra entrada, forma fila e é 3,7 no Google: serve para subir vinte minutos e fotografar, não para sentar e beber.",
+         "mapsQuery": "Nice To Meet You Restaurant Lounge Gran Via 80 Madrid",
+         "mapsCid": "10675294509593715828",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.4233495,
+         "lon": -3.7104527
+        },
+        {
+         "time": "20:30",
          "tbd": false,
          "category": "plain",
          "titleHtml": "<b>Templo de Debod</b>",
@@ -540,26 +646,31 @@ var ITINERARY = {
           "tag",
           "free"
          ],
-         "descHtml": "Um templo egípcio de verdade, doado à Espanha em 1968. O melhor pôr do sol de Madrid, sem discussão.",
+         "descHtml": "Um templo egípcio de verdade, doado à Espanha em 1968. O melhor pôr do sol de Madrid, sem discussão — o sol se põe por volta das 20h45 e o templo se reflete no espelho d'água. Cheguem com folga: no sábado o gramado em volta enche.",
          "mapsQuery": "Templo de Debod Madrid",
+         "mapsCid": "2119746020307306155",
          "img": "roteiro-assets/madrid-debod.jpg",
          "imgAlt": "Templo de Debod ao anoitecer",
-         "lat": 40.4240689,
-         "lon": -3.7176131
+         "lat": 40.4240216,
+         "lon": -3.7177695
         },
         {
-         "time": "21:30",
+         "time": "21:45",
          "tbd": false,
          "category": "meal",
-         "titleHtml": "<b>Jantar</b>",
-         "tag": null,
-         "tagClasses": [],
-         "descHtml": "Sobrino de Botín, o restaurante mais antigo do mundo em funcionamento (1725) — reserve. Ou tapas na Cava Baja, em La Latina.",
-         "mapsQuery": "Sobrino de Botín Madrid",
-         "img": "roteiro-assets/madrid-botin.jpg",
-         "imgAlt": "Sobrino de Botín, Madrid",
-         "lat": 40.4141745,
-         "lon": -3.707981
+         "titleHtml": "<b>Jantar na La Mi Venta</b>",
+         "tag": "4,7 no Google",
+         "tagClasses": [
+          "tag",
+          "tip"
+         ],
+         "descHtml": "Descendo de Debod, dez minutos a pé, numa pracinha silenciosa atrás do Senado. Casa de família antiga, com bar na frente, dois salões e terraço: presunto ibérico cortado na hora, polvo, cecina, entrecosto na brasa. Quase oito mil avaliações em 4,7 e o tipo de lugar que continua cheio de espanhol. Uns € 30 a € 50 por pessoa. Do restaurante ao hotel são quinze minutos subindo pela Gran Vía — ou um táxi, se as pernas já tiverem feito os 5 km do dia.",
+         "mapsQuery": "La Mi Venta Madrid",
+         "mapsCid": "9750852188347724557",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.4204081,
+         "lon": -3.7125435
         }
        ]
       }
@@ -665,13 +776,31 @@ var ITINERARY = {
          "lon": -3.691812
         },
         {
-         "time": "21:30",
+         "time": "20:30",
+         "tbd": false,
+         "category": "meal",
+         "titleHtml": "<b>Jantar no Villa Capri</b>",
+         "tag": "reserva obrigatória",
+         "tagClasses": [
+          "tag",
+          "tip"
+         ],
+         "descHtml": "Italiano do grupo Big Mamma no alto de Chueca, em Hortaleza 118 — vinte minutos a pé subindo de Cibeles. Salão exagerado de propósito, cheio de plantas e neon, massa fresca feita à vista, e um preço que não combina com o cenário: uns € 20 a € 30 por pessoa. 4,7 no Google em vinte e oito mil avaliações. No domingo serve das 19h30 às 23h30 e <b>não entra sem reserva</b> — a casa é do tipo que enche a agenda com semanas de antecedência, então marquem pelo site assim que fecharem as datas.",
+         "mapsQuery": "Villa Capri Madrid",
+         "mapsCid": "4455974415051606371",
+         "img": null,
+         "imgAlt": null,
+         "lat": 40.4261004,
+         "lon": -3.6967338
+        },
+        {
+         "time": "22:30",
          "tbd": false,
          "category": "plain",
          "titleHtml": "<b>Noite</b>",
          "tag": null,
          "tagClasses": [],
-         "descHtml": "Malasaña, na porta do hotel, ou Chueca ao lado.",
+         "descHtml": "Saindo do jantar vocês já estão em Chueca — é descer a Hortaleza e escolher. Malasaña fica logo a oeste, na porta do hotel, para terminar a noite mais perto da cama.",
          "mapsQuery": "Malasaña Madrid",
          "img": null,
          "imgAlt": null,
@@ -1845,6 +1974,11 @@ var ITINERARY = {
   {
    "title": "Reservar flamenco e o rooftop de Sevilha",
    "small_html": "Tablao (Casa de la Memoria ou La Casa del Flamenco) pro dia 27 · Abba The Roof Giralda pro dia 28 (+34 955 44 40 30) · Betis 7 Triana Experience pro jantar do dia 27, se quiserem garantir mesa.",
+   "docs": []
+  },
+  {
+   "title": "Reservar os dois restaurantes de Madrid",
+   "small_html": "Volver Bar de Tapas pro almoço do dia 29 (+34 915 01 70 71) · La Mi Venta pro jantar do mesmo dia (+34 915 59 50 91) — as duas são pequenas para o movimento que têm e no sábado lotam. <b>Villa Capri pro jantar do dia 30</b> é a mais urgente das três: reserva pelo site do Big Mamma, com semanas de antecedência.",
    "docs": []
   },
   {

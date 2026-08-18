@@ -20,6 +20,11 @@
   }
 
   function gmapsUrl(item) {
+    // mapsCid é o identificador do estabelecimento no Google — abre a ficha
+    // do local (nome, fotos, avaliações), não um alfinete solto na coordenada.
+    if (item.mapsCid) {
+      return "https://maps.google.com/?cid=" + item.mapsCid;
+    }
     if (item.lat != null && item.lon != null) {
       return "https://www.google.com/maps/search/?api=1&query=" + item.lat + "," + item.lon;
     }
