@@ -1,10 +1,12 @@
-/* España 2026 — renderer. Reads window.ITINERARY (data.js) and builds the page. */
+/* España 2026 — instrumento de bordo.
+   Lê window.ITINERARY (data.js) e monta um navegador de dias:
+   régua de 16 dias no topo, um dia por tela, detalhes em painel. */
 (function () {
   "use strict";
 
-  var esc = function (s) {
-    return String(s == null ? "" : s);
-  };
+  var D = window.ITINERARY;
+
+  /* ---------- utilidades ---------- */
 
   function el(tag, attrs, html) {
     var e = document.createElement(tag);
@@ -19,230 +21,537 @@
     return e;
   }
 
-  function gmapsUrl(item) {
-    // mapsCid é o identificador do estabelecimento no Google — abre a ficha
-    // do local (nome, fotos, avaliações), não um alfinete solto na coordenada.
-    if (item.mapsCid) {
-      return "https://maps.google.com/?cid=" + item.mapsCid;
-    }
-    if (item.lat != null && item.lon != null) {
-      return "https://www.google.com/maps/search/?api=1&query=" + item.lat + "," + item.lon;
-    }
-    if (item.mapsQuery) {
-      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.mapsQuery);
-    }
-    return null;
+  function esc(s) {
+    return String(s == null ? "" : s);
   }
 
-  function catClass(item) {
-    if (item.category === "hotel" || item.category === "hub") return item.category;
-    return item.category === "meal" ? "meal" : item.category === "activity" ? "activity" : "plain";
+  function stripTags(html) {
+    var d = document.createElement("div");
+    d.innerHTML = html || "";
+    return d.textContent || "";
   }
 
-  function pinIcon(cat, glyph) {
-    if (glyph) {
-      return L.divIcon({
-        className: "",
-        html: '<span class="pin pin-lg dot-' + cat + '">' + glyph + "</span>",
-        iconSize: [22, 22],
-        iconAnchor: [11, 11],
-        popupAnchor: [0, -14],
-      });
-    }
-    return L.divIcon({
-      className: "",
-      html: '<span class="pin dot-' + cat + '"></span>',
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
-      popupAnchor: [0, -10],
+  function anchorsFrom(html) {
+    var d = document.createElement("div");
+    d.innerHTML = html || "";
+    return Array.prototype.map.call(d.querySelectorAll("a"), function (a) {
+      return { label: a.textContent, href: a.getAttribute("href") };
     });
   }
 
-  /* ---------- timeline row builders ---------- */
+  function gmapsUrl(item) {
+    // mapsCid abre a ficha do estabelecimento no Google, não um alfinete solto.
+    if (item.mapsCid) return "https://maps.google.com/?cid=" + item.mapsCid;
+    if (item.lat != null && item.lon != null)
+      return "https://www.google.com/maps/search/?api=1&query=" + item.lat + "," + item.lon;
+    if (item.mapsQuery)
+      return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(item.mapsQuery);
+    return null;
+  }
 
-  function rowSpot(item) {
-    var cat = catClass(item);
-    var row = el("div", { class: "trow " + cat });
-    var when = el("div", { class: "when" }, item.tbd ? esc(item.time) : esc(item.time));
-    row.appendChild(when);
-    row.appendChild(el("div", { class: "dot" }));
-    var content = el("div", { class: "content" });
-    var body = el("div", { class: "body" });
-    var tagHtml = item.tag
-      ? ' <span class="tag' + (item.tagClasses && item.tagClasses.indexOf("free") > -1 ? " free" : item.tagClasses && item.tagClasses.indexOf("tip") > -1 ? " tip" : "") + '">' + esc(item.tag) + "</span>"
+  function catClass(s) {
+    return s.category === "meal" ? "meal" : s.category === "activity" ? "activity" : "plain";
+  }
+
+  /* ---------- modelo: 16 dias em fila ---------- */
+
+  var ABBR = { ida: "Ida", sevilha: "Sevilha", madrid: "Madrid", barcelona: "Barcelona", menorca: "Menorca", volta: "Volta" };
+  var SHORT = { ida: "ida", sevilha: "sev", madrid: "mad", barcelona: "bcn", menorca: "men", volta: "volta" };
+  var WD = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+  var MES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+
+  var SECTIONS = [];
+  if (D.ida) SECTIONS.push({ id: "ida", name: "Ida", days: D.ida.days, subtitle: D.ida.title });
+  (D.cities || []).forEach(function (c) {
+    SECTIONS.push({
+      id: c.id, name: c.name, days: c.days, subtitle: c.dates,
+      kicker: c.kicker, stay: c.stay, hubs: c.hubs, preItems: c.preItems,
+    });
+  });
+  if (D.volta) SECTIONS.push({ id: "volta", name: "Volta", days: D.volta.days, subtitle: D.volta.title });
+
+  var DAYS = [];
+  SECTIONS.forEach(function (sec) {
+    sec.days.forEach(function (day, i) {
+      var m = /(\d{1,2})\/(\d{1,2})/.exec(day.dnum || "");
+      DAYS.push({
+        n: DAYS.length + 1,
+        day: day,
+        sec: sec,
+        firstOfSection: i === 0,
+        date: m ? new Date(2026, +m[2] - 1, +m[1]) : null,
+      });
+    });
+  });
+
+  function todayIndex() {
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    for (var i = 0; i < DAYS.length; i++) {
+      if (DAYS[i].date && DAYS[i].date.getTime() === now.getTime()) return i;
+    }
+    return -1;
+  }
+
+  function fmtDate(d) {
+    if (!d) return "";
+    return WD[d.getDay()] + " " + d.getDate() + " " + MES[d.getMonth()];
+  }
+
+  function daysUntilStart() {
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    var first = DAYS[0].date;
+    return first ? Math.round((first - now) / 86400000) : null;
+  }
+
+  /* ---------- separa compromissos de avisos ---------- */
+
+  function splitDay(entry) {
+    var evs = [], notes = [];
+    (entry.day.items || []).forEach(function (it) {
+      if (it.type === "spots") {
+        it.items.forEach(function (s) { evs.push({ kind: "spot", data: s }); });
+      } else if (it.type === "leg") {
+        evs.push({ kind: "leg", data: it });
+      } else if (it.type === "note") {
+        notes.push({ kind: it.kind || "plain", heading: it.heading, bodyHtml: it.bodyHtml });
+      } else if (it.type === "p") {
+        notes.push({ kind: "plain", bodyHtml: it.html });
+      } else if (it.type === "doc") {
+        notes.push({ kind: "plain", bodyHtml: '<a href="' + it.href + '" target="_blank" rel="noopener">' + esc(it.label) + "</a>" });
+      } else if (it.type === "docs") {
+        notes.push({
+          kind: "plain",
+          bodyHtml: it.links.map(function (l) {
+            return '<a href="' + l.href + '" target="_blank" rel="noopener">' + esc(l.label) + "</a>";
+          }).join(" · "),
+        });
+      }
+    });
+    if (entry.firstOfSection && entry.sec.preItems) {
+      entry.sec.preItems.forEach(function (n) {
+        notes.unshift({ kind: n.kind || "plain", heading: n.heading, bodyHtml: n.bodyHtml });
+      });
+    }
+    return { evs: evs, notes: notes };
+  }
+
+  function hasDetail(s) {
+    return !!(s.descHtml || s.img || (s.docs && s.docs.length) || gmapsUrl(s));
+  }
+
+  /* ============================================================
+     Chrome — appbar, régua, barra do dia
+     ============================================================ */
+
+  var chrome = document.getElementById("chrome");
+  var view = document.getElementById("view");
+  var state = { route: "day", index: 0 };
+  var ticks = [], segs = [], dbCity, dbDate, arrows = {};
+
+  function buildChrome() {
+    chrome.innerHTML = "";
+
+    /* appbar */
+    var bar = el("div", { class: "appbar" });
+    var brand = el("a", { class: "brand", href: "#/d/1" }, 'España <span class="mono">26</span>');
+    bar.appendChild(brand);
+    bar.appendChild(el("div", { class: "grow" }));
+
+    var jump = el("button", { class: "today-jump", type: "button" }, "");
+    var ti = todayIndex();
+    var until = daysUntilStart();
+    if (ti >= 0) {
+      jump.textContent = "hoje";
+      jump.title = "Ir para o dia de hoje";
+      jump.addEventListener("click", function () { go(ti); });
+    } else if (until != null && until > 0) {
+      jump.textContent = until === 1 ? "é amanhã" : "faltam " + until + "d";
+      jump.title = "Ir para o primeiro dia";
+      jump.addEventListener("click", function () { go(0); });
+    } else {
+      jump = null;
+    }
+    if (jump) bar.appendChild(jump);
+
+    var quick = el("nav", { class: "quick" });
+    quick.appendChild(el("a", { href: "#/antes", id: "qAntes" }, "Antes"));
+    quick.appendChild(el("a", { href: "#/reservas", id: "qReservas" }, "Reservas"));
+    bar.appendChild(quick);
+    chrome.appendChild(bar);
+
+    /* régua */
+    var ruler = el("div", { class: "ruler", role: "tablist", "aria-label": "Dias da viagem" });
+    ticks = [];
+    segs = [];
+    var n = 0;
+    SECTIONS.forEach(function (sec) {
+      var seg = el("div", { class: "rseg" });
+      seg.style.flex = String(sec.days.length);
+      var tw = el("div", { class: "rticks" });
+      sec.days.forEach(function () {
+        var idx = n++;
+        var t = el("button", {
+          class: "rtick", type: "button", role: "tab",
+          "aria-label": "Dia " + (idx + 1) + " · " + fmtDate(DAYS[idx].date),
+        }, "<i></i>");
+        t.addEventListener("click", function () { go(idx); });
+        tw.appendChild(t);
+        ticks.push(t);
+      });
+      seg.appendChild(tw);
+      var lbl = el("button", { class: "rlabel", type: "button" },
+        '<span class="s">' + esc(SHORT[sec.id] || sec.name) + '</span><span class="l">' + esc(sec.name) + '</span>');
+      lbl.addEventListener("click", function () {
+        for (var i = 0; i < DAYS.length; i++) if (DAYS[i].sec === sec) return go(i);
+      });
+      seg.appendChild(lbl);
+      seg._sec = sec;
+      segs.push(seg);
+      ruler.appendChild(seg);
+    });
+    chrome.appendChild(ruler);
+
+    /* barra do dia */
+    var db = el("div", { class: "daybar" });
+    arrows.prev = el("button", { class: "arrow", type: "button", "aria-label": "Dia anterior" }, "&#8249;");
+    arrows.next = el("button", { class: "arrow", type: "button", "aria-label": "Próximo dia" }, "&#8250;");
+    // fora do roteiro, a seta da esquerda volta para o dia de onde se saiu
+    arrows.prev.addEventListener("click", function () {
+      go(state.route === "day" ? state.index - 1 : state.index);
+    });
+    arrows.next.addEventListener("click", function () { go(state.index + 1); });
+    var mid = el("div", { class: "daybar-mid" });
+    dbCity = el("span", { class: "db-city" }, "");
+    dbDate = el("span", { class: "db-date" }, "");
+    mid.appendChild(dbCity);
+    mid.appendChild(dbDate);
+    db.appendChild(arrows.prev);
+    db.appendChild(mid);
+    db.appendChild(arrows.next);
+    chrome.appendChild(db);
+  }
+
+  function syncChrome() {
+    var e = DAYS[state.index];
+    var ti = todayIndex();
+    ticks.forEach(function (t, i) {
+      t.setAttribute("aria-current", i === state.index ? "true" : "false");
+      t.classList.toggle("is-today", i === ti);
+    });
+    segs.forEach(function (s) {
+      s.classList.toggle("on", s._sec === e.sec);
+    });
+    if (state.route === "day") {
+      dbCity.textContent = ABBR[e.sec.id] || e.sec.name;
+      var flag = ti === state.index ? '<span class="db-flag">hoje</span>' : "";
+      dbDate.innerHTML = flag + "<b>" + fmtDate(e.date) + '</b><span class="sep">/</span><span>dia ' + e.n + " de " + DAYS.length + "</span>";
+      arrows.prev.disabled = state.index === 0;
+      arrows.prev.setAttribute("aria-label", "Dia anterior");
+      arrows.next.hidden = false;
+      arrows.next.disabled = state.index === DAYS.length - 1;
+    } else {
+      dbCity.textContent = state.route === "antes" ? "Antes de embarcar" : "Reservas";
+      dbDate.innerHTML = "";
+      arrows.prev.disabled = false;
+      arrows.prev.setAttribute("aria-label", "Voltar ao roteiro");
+      arrows.next.hidden = true;
+    }
+    var qa = document.getElementById("qAntes"), qr = document.getElementById("qReservas");
+    if (qa) qa.toggleAttribute("aria-current", state.route === "antes");
+    if (qr) qr.toggleAttribute("aria-current", state.route === "reservas");
+    chrome.classList.toggle("side", state.route !== "day");
+  }
+
+  function setChromeSub(html) {
+    if (state.route !== "day") dbDate.innerHTML = html;
+  }
+
+  /* ============================================================
+     Tela de um dia
+     ============================================================ */
+
+  var asideMap = null;
+
+  function evRow(ev, onOpen) {
+    if (ev.kind === "leg") {
+      var leg = ev.data;
+      var hm = /(\d{1,2}:\d{2})/.exec(stripTags(leg.title_html || ""));
+      // o horário já vive na coluna da esquerda; não repetir no título
+      var ttl = (leg.title_html || "").replace(/^\s*\d{1,2}:\d{2}\s*·\s*/, "");
+      var row = el("button", { class: "ev leg", type: "button" });
+      row.appendChild(el("span", { class: "ev-time" }, hm ? hm[1] : ""));
+      row.appendChild(el("span", { class: "ev-mark" }, "<i>" + esc(leg.icon || "") + "</i>"));
+      var b = el("span", { class: "ev-body" });
+      b.appendChild(el("span", { class: "ev-name" }, ttl));
+      if (leg.meta_html) b.appendChild(el("span", { class: "ev-sub" }, stripTags(leg.meta_html)));
+      row.appendChild(b);
+      row.appendChild(el("span", { class: "ev-more" }, "&#8250;"));
+      row.addEventListener("click", function () { onOpen(ev); });
+      return row;
+    }
+
+    var s = ev.data;
+    var open = hasDetail(s);
+    var r = el("button", { class: "ev " + catClass(s) + (open ? "" : " flat"), type: open ? "button" : "button" });
+    var isClock = /^\d{1,2}:\d{2}$/.test(s.time || "");
+    r.appendChild(el("span", { class: "ev-time" + (isClock ? "" : " soft") }, esc(s.time || "")));
+    r.appendChild(el("span", { class: "ev-mark" }, "<i></i>"));
+    var body = el("span", { class: "ev-body" });
+    var tag = s.tag
+      ? ' <span class="ev-tag' + ((s.tagClasses || []).indexOf("free") > -1 ? " free" : (s.tagClasses || []).indexOf("tip") > -1 ? " tip" : "") + '">' + esc(s.tag) + "</span>"
       : "";
-    body.appendChild(el("span", { class: "name" }, (item.titleHtml || "") + tagHtml));
-    if (item.descHtml) body.appendChild(el("span", { class: "desc" }, item.descHtml));
-    var url = gmapsUrl(item);
-    if (url) {
-      var a = el(
-        "a",
-        { class: "gmap-link", href: url, target: "_blank", rel: "noopener" },
-        "&#128205; abrir no mapa"
-      );
-      body.appendChild(a);
-    }
-    if (item.docs && item.docs.length) body.appendChild(blockDocs(item.docs));
-    content.appendChild(body);
-    if (item.img) {
-      content.appendChild(el("img", { class: "thumb", src: item.img, alt: item.imgAlt || "", loading: "lazy" }));
-    }
-    row.appendChild(content);
-    return row;
+    body.appendChild(el("span", { class: "ev-name" }, (s.titleHtml || "") + tag));
+    if (s.descHtml) body.appendChild(el("span", { class: "ev-sub" }, stripTags(s.descHtml)));
+    r.appendChild(body);
+    r.appendChild(el("span", { class: "ev-more" }, open ? "&#8250;" : ""));
+    if (open) r.addEventListener("click", function () { onOpen(ev); });
+    else r.disabled = true;
+    return r;
   }
 
-  function rowLeg(item) {
-    var row = el("div", { class: "trow leg" });
-    row.appendChild(el("div", { class: "when" }, "" ));
-    row.appendChild(el("div", { class: "dot" }));
-    var content = el("div", { class: "content" });
-    content.appendChild(el("div", { class: "icon" }, item.icon || ""));
-    var body = el("div", { class: "body" });
-    body.appendChild(el("span", { class: "name" }, item.title_html || ""));
-    if (item.meta_html) body.appendChild(el("span", { class: "meta" }, item.meta_html));
-    if (item.docs && item.docs.length) body.appendChild(blockDocs(item.docs));
-    content.appendChild(body);
-    row.appendChild(content);
-    return row;
+  function renderDay() {
+    var e = DAYS[state.index];
+    var parts = splitDay(e);
+    var wrap = el("div", { class: "day day-in" });
+
+    var head = el("div", { class: "day-head" });
+    head.appendChild(el("h1", { class: "day-title" }, esc(e.day.dttl)));
+    wrap.appendChild(head);
+
+    /* chips — atalhos do dia (só no mobile; no desktop viram a coluna lateral) */
+    var chips = el("div", { class: "chips" });
+    if (e.sec.stay) {
+      var cs = el("button", { class: "chip", type: "button" },
+        '<span class="g">&#127976;</span><em>' + esc(e.sec.stay.t) + "</em>");
+      cs.addEventListener("click", function () { openStay(e.sec); });
+      chips.appendChild(cs);
+    }
+    if (parts.notes.length) {
+      var cn = el("button", { class: "chip warn", type: "button" },
+        '<span class="g">&#9873;</span>' + (parts.notes.length === 1 ? "1 aviso" : parts.notes.length + " avisos"));
+      cn.addEventListener("click", function () { openNotes(e, parts.notes); });
+      chips.appendChild(cn);
+    }
+    var pts = dayPoints(e, parts);
+    if (pts.length) {
+      var cm = el("button", { class: "chip", type: "button" }, '<span class="g">&#9678;</span>mapa do dia');
+      cm.addEventListener("click", function () { openMap(e, pts); });
+      chips.appendChild(cm);
+    }
+    if (chips.childNodes.length) wrap.appendChild(chips);
+
+    /* a espinha */
+    var plan = el("div", { class: "plan" });
+    parts.evs.forEach(function (ev) {
+      plan.appendChild(evRow(ev, function (x) {
+        if (x.kind === "leg") openLeg(x.data);
+        else openSpot(x.data);
+      }));
+    });
+    plan.appendChild(el("div", { class: "plan-end" }, "<i></i>"));
+    if (state.index === DAYS.length - 1) {
+      plan.appendChild(el("p", { class: "sig", style: "margin-top:26px;text-align:center" }, "Que seja a primeira de muitas."));
+    }
+    wrap.appendChild(plan);
+
+    /* coluna lateral — telas largas */
+    var aside = el("div", { class: "aside" });
+    if (e.sec.stay) {
+      var card = el("div", { class: "card" });
+      card.appendChild(el("h3", null, "Hospedagem"));
+      var inn = el("div", { class: "in" });
+      inn.appendChild(el("b", null, esc(e.sec.stay.t)));
+      inn.insertAdjacentHTML("beforeend", e.sec.stay.m_html || "");
+      if (e.sec.stay.doc) {
+        inn.insertAdjacentHTML("beforeend",
+          '<br><a href="' + e.sec.stay.doc.href + '" target="_blank" rel="noopener">' + esc(e.sec.stay.doc.label) + " &#8599;</a>");
+      }
+      card.appendChild(inn);
+      aside.appendChild(card);
+    }
+    parts.notes.forEach(function (n) {
+      aside.appendChild(noteBox(n));
+    });
+    if (pts.length) aside.appendChild(el("div", { class: "map", id: "asideMap" }));
+    wrap.appendChild(aside);
+
+    view.innerHTML = "";
+    view.appendChild(wrap);
+    view.scrollTop = 0;
+
+    if (asideMap) { asideMap.remove(); asideMap = null; }
+    if (pts.length && window.matchMedia("(min-width:900px)").matches) {
+      requestAnimationFrame(function () {
+        asideMap = buildMap("asideMap", pts);
+      });
+    }
   }
 
-  function blockNote(n) {
-    var cls = "note" + (n.kind && n.kind !== "plain" ? " " + n.kind : "");
-    var box = el("div", { class: cls });
+  function noteBox(n) {
+    var box = el("div", { class: "note" + (n.kind && n.kind !== "plain" ? " " + n.kind : "") });
     if (n.heading) box.appendChild(el("span", { class: "h" }, esc(n.heading)));
-    box.appendChild(document.createTextNode(""));
     box.insertAdjacentHTML("beforeend", n.bodyHtml || "");
     return box;
   }
 
-  function blockDocs(links) {
-    var wrap = el("div", { class: "docs", style: "display:flex;flex-wrap:wrap;gap:8px 20px;margin:10px 0" });
-    links.forEach(function (l) {
-      wrap.appendChild(el("a", { class: "doc", href: l.href, target: "_blank", rel: "noopener" }, esc(l.label)));
-    });
-    return wrap;
-  }
-
-  function blockP(html) {
-    return el("p", null, html);
-  }
-
-  /* renders a day's item list as alternating timeline/plain blocks */
-  function renderItems(items) {
-    var frag = document.createDocumentFragment();
-    var currentTimeline = null;
-    function openTimeline() {
-      if (!currentTimeline) {
-        currentTimeline = el("div", { class: "timeline" });
-        frag.appendChild(currentTimeline);
-      }
-      return currentTimeline;
-    }
-    function closeTimeline() {
-      currentTimeline = null;
-    }
-    items.forEach(function (it) {
-      if (it.type === "leg") {
-        openTimeline().appendChild(rowLeg(it));
-      } else if (it.type === "spots") {
-        var tl = openTimeline();
-        it.items.forEach(function (spot) {
-          tl.appendChild(rowSpot(spot));
-        });
-      } else if (it.type === "note") {
-        closeTimeline();
-        frag.appendChild(blockNote(it));
-      } else if (it.type === "doc") {
-        closeTimeline();
-        frag.appendChild(blockDocs([{ label: it.label, href: it.href }]));
-      } else if (it.type === "docs") {
-        closeTimeline();
-        frag.appendChild(blockDocs(it.links));
-      } else if (it.type === "p") {
-        closeTimeline();
-        frag.appendChild(blockP(it.html));
-      }
-    });
-    return frag;
-  }
-
-  function renderDay(day) {
-    var det = el("details", { class: "day" }, null);
-    if (day.open) det.setAttribute("open", "");
-    var summary = el("summary", null, null);
-    summary.appendChild(el("span", { class: "dnum" }, esc(day.dnum)));
-    summary.appendChild(el("span", { class: "dttl" }, esc(day.dttl)));
-    summary.appendChild(el("span", { class: "chev" }));
-    det.appendChild(summary);
-    var body = el("div", { class: "body" });
-    body.appendChild(renderItems(day.items));
-    det.appendChild(body);
-    return det;
-  }
-
-  /* ---------- map ---------- */
-
-  function collectSpots(days) {
+  function dayPoints(e, parts) {
     var out = [];
-    days.forEach(function (day) {
-      day.items.forEach(function (it) {
-        if (it.type === "spots") {
-          it.items.forEach(function (spot) {
-            if (spot.lat != null && spot.lon != null) out.push(spot);
-          });
-        }
-      });
+    parts.evs.forEach(function (ev) {
+      if (ev.kind !== "spot") return;
+      var s = ev.data;
+      if (s.lat != null && s.lon != null) out.push(s);
     });
-    return out;
+    var extra = [];
+    if (e.sec.stay && e.sec.stay.lat != null) {
+      extra.push({ lat: e.sec.stay.lat, lon: e.sec.stay.lon, titleHtml: esc(e.sec.stay.t), category: "hotel", kind: "Hospedagem" });
+    }
+    (e.sec.hubs || []).forEach(function (h) {
+      if (h.lat != null) extra.push({ lat: h.lat, lon: h.lon, titleHtml: h.titleHtml, category: "hub", kind: h.kind });
+    });
+    return out.length ? out.concat(extra) : [];
   }
 
-  function collectLandmarks(city) {
-    var out = [];
-    if (city.stay && city.stay.lat != null && city.stay.lon != null) {
-      out.push({
-        lat: city.stay.lat,
-        lon: city.stay.lon,
-        titleHtml: esc(city.stay.t),
-        category: "hotel",
-        kind: "Hospedagem",
+  /* ============================================================
+     Painel deslizante
+     ============================================================ */
+
+  var sheetRoot = document.getElementById("sheetRoot");
+  var lastFocus = null;
+  var sheetMap = null;
+
+  function closeSheet() {
+    if (!sheetRoot.classList.contains("open")) return;
+    if (sheetMap) { sheetMap.remove(); sheetMap = null; }
+    sheetRoot.classList.remove("open");
+    sheetRoot.setAttribute("aria-hidden", "true");
+    sheetRoot.innerHTML = "";
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function openSheet(kicker, title, buildBody) {
+    lastFocus = document.activeElement;
+    sheetRoot.innerHTML = "";
+    var back = el("div", { class: "sheet-back" });
+    back.addEventListener("click", closeSheet);
+    var sheet = el("div", { class: "sheet", role: "dialog", "aria-modal": "true", "aria-label": stripTags(title) });
+    var head = el("div", { class: "sheet-head" });
+    var t = el("div", { class: "t" });
+    if (kicker) t.appendChild(el("span", { class: "sheet-kick" }, esc(kicker)));
+    t.appendChild(el("div", { class: "sheet-title" }, title));
+    head.appendChild(t);
+    var close = el("button", { class: "sheet-close", type: "button", "aria-label": "Fechar" }, "&#10005;");
+    close.addEventListener("click", closeSheet);
+    head.appendChild(close);
+    sheet.appendChild(head);
+    var body = el("div", { class: "sheet-body" });
+    buildBody(body);
+    sheet.appendChild(body);
+    sheetRoot.appendChild(back);
+    sheetRoot.appendChild(sheet);
+    sheetRoot.classList.add("open");
+    sheetRoot.setAttribute("aria-hidden", "false");
+    close.focus();
+    return { sheet: sheet, body: body };
+  }
+
+  function actLinks(container, list) {
+    if (!list || !list.length) return;
+    var acts = el("div", { class: "acts" });
+    list.forEach(function (a) {
+      acts.appendChild(el("a", {
+        class: "act" + (a.primary ? " primary" : ""),
+        href: a.href, target: "_blank", rel: "noopener",
+      }, esc(a.label)));
+    });
+    container.appendChild(acts);
+  }
+
+  function openSpot(s) {
+    openSheet(s.time, s.titleHtml || "", function (body) {
+      if (s.img) body.appendChild(el("img", { class: "shot", src: s.img, alt: s.imgAlt || "", loading: "lazy" }));
+      if (s.tag) {
+        body.appendChild(el("p", null,
+          '<span class="ev-tag' + ((s.tagClasses || []).indexOf("free") > -1 ? " free" : (s.tagClasses || []).indexOf("tip") > -1 ? " tip" : "") + '">' + esc(s.tag) + "</span>"));
+      }
+      if (s.descHtml) body.appendChild(el("p", null, s.descHtml));
+      var acts = [];
+      var url = gmapsUrl(s);
+      if (url) acts.push({ label: "Abrir no mapa ↗", href: url, primary: true });
+      (s.docs || []).forEach(function (d) { acts.push({ label: d.label + " ↗", href: d.href }); });
+      actLinks(body, acts);
+    });
+  }
+
+  function openLeg(leg) {
+    openSheet("Deslocamento", leg.title_html || "", function (body) {
+      if (leg.meta_html) body.appendChild(el("p", null, leg.meta_html));
+      actLinks(body, (leg.docs || []).map(function (d) {
+        return { label: d.label + " ↗", href: d.href, primary: true };
+      }));
+    });
+  }
+
+  function openStay(sec) {
+    openSheet("Hospedagem · " + sec.name, esc(sec.stay.t), function (body) {
+      body.appendChild(el("p", null, sec.stay.m_html || ""));
+      var acts = [];
+      if (sec.stay.doc) acts.push({ label: sec.stay.doc.label + " ↗", href: sec.stay.doc.href, primary: true });
+      if (sec.stay.lat != null) {
+        acts.push({ label: "Abrir no mapa ↗", href: "https://www.google.com/maps/search/?api=1&query=" + sec.stay.lat + "," + sec.stay.lon });
+      }
+      actLinks(body, acts);
+    });
+  }
+
+  function openNotes(e, notes) {
+    openSheet(fmtDate(e.date), "Avisos do dia", function (body) {
+      notes.forEach(function (n) { body.appendChild(noteBox(n)); });
+    });
+  }
+
+  function openMap(e, pts) {
+    openSheet(fmtDate(e.date), "Mapa do dia", function (body) {
+      body.appendChild(el("div", { class: "map-legend" },
+        '<span><i class="dot-meal"></i>refeição</span><span><i class="dot-activity"></i>atividade</span><span><i class="dot-plain"></i>ponto</span><span><i class="dot-hotel"></i>hotel · estação</span>'));
+      body.appendChild(el("div", { class: "sheet-map", id: "sheetMap" }));
+    });
+    requestAnimationFrame(function () {
+      sheetMap = buildMap("sheetMap", pts);
+      if (sheetMap) setTimeout(function () { if (sheetMap) sheetMap.invalidateSize(); }, 60);
+    });
+  }
+
+  /* ---------- mapa ---------- */
+
+  function pinIcon(cat, num) {
+    if (num) {
+      return L.divIcon({
+        className: "", html: '<span class="pin pin-num dot-' + cat + '">' + num + "</span>",
+        iconSize: [20, 20], iconAnchor: [10, 10], popupAnchor: [0, -12],
       });
     }
-    (city.hubs || []).forEach(function (h) {
-      if (h.lat != null && h.lon != null) {
-        out.push({
-          lat: h.lat,
-          lon: h.lon,
-          titleHtml: h.titleHtml,
-          category: "hub",
-          kind: h.kind,
-        });
-      }
+    return L.divIcon({
+      className: "", html: '<span class="pin dot-' + cat + '"></span>',
+      iconSize: [12, 12], iconAnchor: [6, 6], popupAnchor: [0, -8],
     });
-    return out;
   }
 
-  function glyphFor(s) {
-    if (s.category === "hotel") return "&#127976;";
-    if (s.category === "hub") return s.kind === "Aeroporto" ? "&#9992;" : "&#128646;";
-    return null;
-  }
-
-  function buildMap(containerId, spots) {
-    if (!spots.length || typeof L === "undefined") return;
-    var map = L.map(containerId, { scrollWheelZoom: false });
+  function buildMap(id, spots) {
+    var node = document.getElementById(id);
+    if (!node || !spots.length || typeof L === "undefined") return null;
+    var map = L.map(id, { scrollWheelZoom: false, attributionControl: true });
     L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-      maxZoom: 20,
-      subdomains: "abcd",
-      attribution: '&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+      maxZoom: 20, subdomains: "abcd",
+      attribution: '&copy; OpenStreetMap &copy; CARTO',
     }).addTo(map);
-
-    var bounds = [];
+    var bounds = [], num = 0;
     spots.forEach(function (s) {
-      var cat = catClass(s);
-      var glyph = glyphFor(s);
-      var marker = L.marker([s.lat, s.lon], { icon: pinIcon(cat, glyph) }).addTo(map);
+      var isPlace = s.category !== "hotel" && s.category !== "hub";
+      var cat = isPlace ? catClass(s) : s.category;
+      var marker = L.marker([s.lat, s.lon], { icon: pinIcon(cat, isPlace ? ++num : 0) }).addTo(map);
       var pop = el("div", { class: "map-pop" });
-      if (s.img) pop.appendChild(el("img", { src: s.img, alt: "" }));
       pop.appendChild(el("span", { class: "time" }, esc(s.kind || s.time || "")));
       pop.appendChild(el("span", { class: "name" }, s.titleHtml || ""));
       var url = gmapsUrl(s);
@@ -250,99 +559,20 @@
       marker.bindPopup(pop);
       bounds.push([s.lat, s.lon]);
     });
-    if (bounds.length === 1) {
-      map.setView(bounds[0], 14);
-    } else {
-      map.fitBounds(bounds, { padding: [28, 28] });
-    }
+    if (bounds.length === 1) map.setView(bounds[0], 15);
+    else map.fitBounds(bounds, { padding: [26, 26] });
     map.on("focus", function () { map.scrollWheelZoom.enable(); });
     map.on("blur", function () { map.scrollWheelZoom.disable(); });
+    return map;
   }
 
-  /* ---------- city section ---------- */
-
-  function renderCity(city) {
-    var sec = el("section", { class: "city", id: city.id });
-
-    var spread = el("div", { class: "city-spread" });
-    var imgCol = el("div", { class: "img-col" });
-    imgCol.appendChild(el("img", { src: city.coverImg, alt: city.coverAlt, loading: "lazy" }));
-    spread.appendChild(imgCol);
-
-    var textCol = el("div", { class: "text-col" });
-    textCol.appendChild(el("span", { class: "kicker" }, esc(city.kicker)));
-    textCol.appendChild(el("h3", null, esc(city.name)));
-    textCol.appendChild(el("div", { class: "dates" }, esc(city.dates)));
-    if (city.stay) {
-      var stay = el("div", { class: "stay" });
-      stay.appendChild(el("span", { class: "lbl" }, "Hospedagem"));
-      stay.appendChild(el("div", { class: "t" }, esc(city.stay.t)));
-      stay.appendChild(el("div", { class: "m" }, city.stay.m_html));
-      if (city.stay.doc) {
-        stay.appendChild(
-          el("a", { class: "doc", href: city.stay.doc.href, target: "_blank", rel: "noopener" }, esc(city.stay.doc.label))
-        );
-      }
-      textCol.appendChild(stay);
-    }
-    spread.appendChild(textCol);
-    sec.appendChild(spread);
-
-    var wrap = el("div", { class: "wrap" });
-
-    (city.preItems || []).forEach(function (n) {
-      wrap.appendChild(blockNote(n));
-    });
-
-    var spots = collectSpots(city.days).concat(collectLandmarks(city));
-    if (spots.length) {
-      var mapId = "map-" + city.id;
-      var mapWrap = el("div", { class: "city-map-wrap" });
-      var legend = el(
-        "div",
-        { class: "map-legend" },
-        '<span><i class="dot-meal"></i>refeição</span><span><i class="dot-activity"></i>atividade</span><span><i class="dot-plain"></i>ponto turístico</span><span class="glyph">&#127976;hospedagem</span><span class="glyph">&#9992;&#65039;aeroporto / estação</span>'
-      );
-      mapWrap.appendChild(legend);
-      mapWrap.appendChild(el("div", { class: "city-map", id: mapId, tabindex: "0" }));
-      wrap.appendChild(mapWrap);
-      requestAnimationFrame(function () {
-        buildMap(mapId, spots);
-      });
-    }
-
-    city.days.forEach(function (day) {
-      wrap.appendChild(renderDay(day));
-    });
-
-    sec.appendChild(wrap);
-    return sec;
-  }
-
-  /* ---------- mini sections (ida / volta) ---------- */
-
-  function renderMiniSection(data, id) {
-    var sec = el("section", { id: id, class: "mini-section" });
-    var head = el("div", { class: "section-head" });
-    head.appendChild(el("span", { class: "kicker" }, esc(data.label)));
-    head.appendChild(el("h2", null, esc(data.title)));
-    head.appendChild(el("p", null, esc(data.subtitle)));
-    sec.appendChild(head);
-    data.days.forEach(function (day) {
-      sec.appendChild(renderDay(day));
-    });
-    return sec;
-  }
-
-  /* ---------- antes ---------- */
+  /* ============================================================
+     Antes de embarcar
+     ============================================================ */
 
   function slugify(s) {
-    return String(s)
-      .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+    return String(s).normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   }
 
   var CHECK_PREFIX = "espanha2026:antes:";
@@ -350,91 +580,56 @@
   var REMOVED_KEY = CHECK_PREFIX + "removed";
 
   function isChecked(id) {
-    try {
-      return localStorage.getItem(CHECK_PREFIX + id) === "1";
-    } catch (e) {
-      return false;
-    }
+    try { return localStorage.getItem(CHECK_PREFIX + id) === "1"; } catch (e) { return false; }
   }
-
   function setChecked(id, val) {
     try {
       if (val) localStorage.setItem(CHECK_PREFIX + id, "1");
       else localStorage.removeItem(CHECK_PREFIX + id);
-    } catch (e) {
-      /* localStorage unavailable (private mode etc.); state just won't persist */
-    }
+    } catch (e) { /* modo privado: o estado só não persiste */ }
   }
-
   function lsGetJSON(key, fallback) {
-    try {
-      var raw = localStorage.getItem(key);
-      return raw == null ? fallback : JSON.parse(raw);
-    } catch (e) {
-      return fallback;
-    }
+    try { var raw = localStorage.getItem(key); return raw == null ? fallback : JSON.parse(raw); }
+    catch (e) { return fallback; }
   }
-
   function lsSetJSON(key, val) {
-    try {
-      localStorage.setItem(key, JSON.stringify(val));
-    } catch (e) {
-      /* localStorage unavailable; state just won't persist */
-    }
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { /* idem */ }
   }
 
-  function renderAntes(seedItems) {
-    var sec = el("section", { id: "antes" });
-    var head = el("div", { class: "section-head" });
-    head.appendChild(el("span", { class: "kicker" }, "Preparativos"));
-    head.appendChild(el("h2", null, "Antes de embarcar"));
-    var progress = el("p", { id: "antesProgress" }, "");
-    head.appendChild(progress);
-    sec.appendChild(head);
+  function renderAntes() {
+    var seedItems = D.antes || [];
+    var screen = el("div", { class: "screen day-in" });
 
     var openList = el("ul", { class: "check" });
     var doneSummary = el("summary", null, "");
-    var doneList = el("ul", { class: "check check-donelist" });
+    var doneList = el("ul", { class: "check" });
     var doneDetails = el("details", { class: "check-done" });
     doneDetails.appendChild(doneSummary);
     doneDetails.appendChild(doneList);
 
     var addForm = el("form", { class: "check-add" });
-    var addInput = el("input", {
-      type: "text",
-      placeholder: "Adicionar um item...",
-      "aria-label": "Adicionar item ao checklist",
-    });
-    var addBtn = el("button", { type: "submit" }, "Adicionar");
+    var addInput = el("input", { type: "text", placeholder: "Adicionar um item...", "aria-label": "Adicionar item" });
     addForm.appendChild(addInput);
-    addForm.appendChild(addBtn);
+    addForm.appendChild(el("button", { type: "submit" }, "Adicionar"));
 
-    sec.appendChild(openList);
-    sec.appendChild(doneDetails);
-    sec.appendChild(addForm);
+    screen.appendChild(openList);
+    screen.appendChild(doneDetails);
+    screen.appendChild(addForm);
 
     function loadItems() {
       var removed = lsGetJSON(REMOVED_KEY, []);
       var custom = lsGetJSON(CUSTOM_KEY, []);
-      var seed = seedItems
-        .map(function (it) {
-          return { id: slugify(it.title), title: it.title, small_html: it.small_html, docs: it.docs };
-        })
-        .filter(function (it) {
-          return removed.indexOf(it.id) === -1;
-        });
-      var extra = custom.filter(function (it) {
-        return removed.indexOf(it.id) === -1;
-      });
-      return seed.concat(extra);
+      var seed = seedItems.map(function (it) {
+        return { id: slugify(it.title), title: it.title, small_html: it.small_html, docs: it.docs };
+      }).filter(function (it) { return removed.indexOf(it.id) === -1; });
+      return seed.concat(custom.filter(function (it) { return removed.indexOf(it.id) === -1; }));
     }
 
     function removeItem(id) {
       var removed = lsGetJSON(REMOVED_KEY, []);
       if (removed.indexOf(id) === -1) removed.push(id);
       lsSetJSON(REMOVED_KEY, removed);
-      var custom = lsGetJSON(CUSTOM_KEY, []);
-      lsSetJSON(CUSTOM_KEY, custom.filter(function (c) { return c.id !== id; }));
+      lsSetJSON(CUSTOM_KEY, lsGetJSON(CUSTOM_KEY, []).filter(function (c) { return c.id !== id; }));
       setChecked(id, false);
       draw();
     }
@@ -443,8 +638,7 @@
       title = title.trim();
       if (!title) return;
       var custom = lsGetJSON(CUSTOM_KEY, []);
-      var id = "custom-" + Date.now().toString(36) + "-" + slugify(title).slice(0, 30);
-      custom.push({ id: id, title: title });
+      custom.push({ id: "custom-" + Date.now().toString(36) + "-" + slugify(title).slice(0, 30), title: title });
       lsSetJSON(CUSTOM_KEY, custom);
       draw();
     }
@@ -455,21 +649,22 @@
       var label = el("label");
       var input = el("input", { type: "checkbox" });
       if (checked) input.checked = true;
-      input.addEventListener("change", function () {
-        setChecked(it.id, input.checked);
-        draw();
-      });
+      input.addEventListener("change", function () { setChecked(it.id, input.checked); draw(); });
       label.appendChild(input);
       var right = el("div");
       right.appendChild(el("b", null, esc(it.title)));
       if (it.small_html) right.appendChild(el("small", null, it.small_html));
-      if (it.docs && it.docs.length) right.appendChild(blockDocs(it.docs));
+      if (it.docs && it.docs.length) {
+        var acts = el("div", { class: "acts" });
+        it.docs.forEach(function (d) {
+          acts.appendChild(el("a", { class: "act", href: d.href, target: "_blank", rel: "noopener" }, esc(d.label) + " ↗"));
+        });
+        right.appendChild(acts);
+      }
       label.appendChild(right);
       li.appendChild(label);
-      var rm = el("button", { type: "button", class: "check-remove", "aria-label": "Remover “" + it.title + "”" }, "&times;");
-      rm.addEventListener("click", function () {
-        removeItem(it.id);
-      });
+      var rm = el("button", { type: "button", class: "check-remove", "aria-label": "Remover " + it.title }, "&times;");
+      rm.addEventListener("click", function () { removeItem(it.id); });
       li.appendChild(rm);
       return li;
     }
@@ -478,215 +673,162 @@
       var items = loadItems();
       var open = items.filter(function (it) { return !isChecked(it.id); });
       var done = items.filter(function (it) { return isChecked(it.id); });
-
       openList.innerHTML = "";
       open.forEach(function (it) { openList.appendChild(itemRow(it)); });
-
       doneList.innerHTML = "";
       done.forEach(function (it) { doneList.appendChild(itemRow(it)); });
       doneDetails.style.display = done.length ? "" : "none";
       doneSummary.textContent = done.length === 1 ? "1 item concluído" : done.length + " itens concluídos";
-
       var total = items.length;
-      progress.textContent = total === 0
-        ? "Nenhum item ainda — adicione um abaixo"
-        : total - open.length === total
-        ? "Tudo pronto — " + total + " de " + total + " concluídos"
-        : total - open.length + " de " + total + " concluídos";
+      setChromeSub(total === 0 ? "<span>nenhum item ainda</span>"
+        : done.length === total ? "<b>tudo pronto</b><span class=\"sep\">/</span><span>" + total + " itens</span>"
+        : "<b>" + done.length + " de " + total + "</b><span class=\"sep\">/</span><span>concluídos</span>");
     }
 
-    addForm.addEventListener("submit", function (e) {
-      e.preventDefault();
+    addForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
       addItem(addInput.value);
       addInput.value = "";
       addInput.focus();
     });
 
     draw();
-    return sec;
+    view.innerHTML = "";
+    view.appendChild(screen);
+    view.scrollTop = 0;
   }
 
-  /* ---------- reservas ---------- */
+  /* ============================================================
+     Reservas
+     ============================================================ */
 
-  function renderReservas(data) {
-    var sec = el("section", { id: "reservas" });
-    var head = el("div", { class: "section-head" });
-    head.appendChild(el("span", { class: "kicker" }, "Documentos"));
-    head.appendChild(el("h2", null, "Todas as reservas"));
-    head.appendChild(el("p", null, "Toque em qualquer linha para abrir o comprovante"));
-    sec.appendChild(head);
-    sec.appendChild(blockNote({ kind: "plain", heading: "Sobre esta página pública", bodyHtml: data.note_html.replace(/^<span class="h">.*?<\/span>/, "") }));
+  function renderReservas() {
+    var data = D.reservas || { rows: [], contacts: [] };
+    var screen = el("div", { class: "screen day-in" });
+    screen.appendChild(el("p", { class: "sub" },
+      "Códigos e PINs ficam de fora desta página. Os comprovantes completos estão na pasta privada do OneDrive."));
 
-    var scroll = el("div", { class: "scroll" });
-    var table = el("table");
-    table.appendChild(
-      el("tr", null, "<th>Data</th><th>Trecho ou estadia</th><th>Código</th><th>Arquivo</th>")
-    );
+    var list = el("ul", { class: "rows" });
     data.rows.forEach(function (r) {
-      table.appendChild(
-        el(
-          "tr",
-          null,
-          "<td>" + esc(r.data) + "</td><td>" + esc(r.trecho) + '</td><td class="mono">' + esc(r.codigo) + "</td><td>" + r.arquivo_html + "</td>"
-        )
-      );
+      var links = anchorsFrom(r.arquivo_html);
+      var li = el("li");
+      if (links.length === 1) {
+        var a = el("a", { href: links[0].href, target: "_blank", rel: "noopener" });
+        a.appendChild(el("span", { class: "d mono" }, esc(r.data)));
+        a.appendChild(el("span", { class: "t" }, esc(r.trecho)));
+        a.appendChild(el("span", { class: "f" }, esc(links[0].label) + " ↗"));
+        li.appendChild(a);
+      } else {
+        var row = el("div", { class: "norow" });
+        row.appendChild(el("span", { class: "d mono" }, esc(r.data)));
+        row.appendChild(el("span", { class: "t" }, esc(r.trecho)));
+        var multi = el("span", { class: "f multi" });
+        links.forEach(function (l, i) {
+          if (i) multi.appendChild(document.createTextNode("·"));
+          multi.appendChild(el("a", { href: l.href, target: "_blank", rel: "noopener" }, esc(l.label)));
+        });
+        row.appendChild(multi);
+        li.appendChild(row);
+      }
+      list.appendChild(li);
     });
-    scroll.appendChild(table);
-    sec.appendChild(scroll);
+    screen.appendChild(list);
 
-    sec.appendChild(el("h2", { style: "margin-top:48px" }, "Contatos"));
-    var contact = el("div", { class: "contact" });
-    var ctable = el("table");
-    data.contacts.forEach(function (c) {
-      ctable.appendChild(el("tr", null, "<td>" + esc(c.label) + "</td><td>" + c.value_html + "</td>"));
+    screen.appendChild(el("h2", null, "Contatos"));
+    var cl = el("ul", { class: "contacts" });
+    (data.contacts || []).forEach(function (c) {
+      var li = el("li");
+      li.appendChild(el("span", { class: "k" }, esc(c.label)));
+      li.appendChild(el("span", { class: "v" }, c.value_html));
+      cl.appendChild(li);
     });
-    contact.appendChild(ctable);
-    sec.appendChild(contact);
-    return sec;
+    screen.appendChild(cl);
+
+    screen.appendChild(el("p", { class: "fine" },
+      "Confira horários e ingressos nos sites oficiais antes de viajar.<br>Fotografias: Wikimedia Commons, sob licenças livres · Mapas: OpenStreetMap contributors."));
+
+    view.innerHTML = "";
+    view.appendChild(screen);
+    view.scrollTop = 0;
   }
 
-  /* ---------- assemble ---------- */
+  /* ============================================================
+     Rotas
+     ============================================================ */
+
+  function go(i) {
+    if (i < 0 || i >= DAYS.length) return;
+    location.hash = "#/d/" + (i + 1);
+  }
+
+  function route() {
+    closeSheet();
+    var h = location.hash.replace(/^#\/?/, "");
+    if (h === "antes") {
+      state.route = "antes";
+      renderAntes();
+    } else if (h === "reservas") {
+      state.route = "reservas";
+      renderReservas();
+    } else {
+      var m = /^d\/(\d+)/.exec(h);
+      var i = m ? Math.min(Math.max(+m[1] - 1, 0), DAYS.length - 1) : defaultIndex();
+      state.route = "day";
+      state.index = i;
+      renderDay();
+      if (!m) history.replaceState(null, "", "#/d/" + (i + 1));
+    }
+    syncChrome();
+  }
+
+  function defaultIndex() {
+    var ti = todayIndex();
+    if (ti >= 0) return ti;
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    if (DAYS[DAYS.length - 1].date && now > DAYS[DAYS.length - 1].date) return DAYS.length - 1;
+    return 0;
+  }
+
+  /* ---------- gestos e teclado ---------- */
+
+  function initGestures() {
+    var x0 = null, y0 = null, t0 = 0;
+    view.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) { x0 = null; return; }
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now();
+    }, { passive: true });
+    view.addEventListener("touchend", function (e) {
+      if (x0 == null || state.route !== "day") return;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - x0, dy = t.clientY - y0;
+      x0 = null;
+      if (Date.now() - t0 > 600) return;
+      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.8) return;
+      go(state.index + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") return closeSheet();
+      if (state.route !== "day" || sheetRoot.classList.contains("open")) return;
+      var tag = (e.target.tagName || "").toLowerCase();
+      if (tag === "input" || tag === "textarea") return;
+      if (e.key === "ArrowRight") go(state.index + 1);
+      else if (e.key === "ArrowLeft") go(state.index - 1);
+    });
+  }
+
+  /* ---------- start ---------- */
 
   function main() {
-    var data = window.ITINERARY;
-    var main = document.getElementById("app");
-
-    if (data.antes) {
-      var antesWrap = el("div", { class: "wrap" });
-      antesWrap.appendChild(renderAntes(data.antes));
-      main.appendChild(antesWrap);
-    }
-    main.appendChild(el("div", { class: "wrap" }, '<div class="divider"><span class="mark"></span></div>'));
-
-    if (data.ida) {
-      var idaWrap = el("div", { class: "wrap" });
-      idaWrap.appendChild(renderMiniSection(data.ida, "ida"));
-      main.appendChild(idaWrap);
-      main.appendChild(el("div", { class: "wrap" }, '<div class="divider"><span class="mark"></span></div>'));
-    }
-
-    data.cities.forEach(function (city, i) {
-      main.appendChild(renderCity(city));
-      main.appendChild(el("div", { class: "wrap" }, '<div class="divider"><span class="mark"></span></div>'));
-    });
-
-    if (data.volta) {
-      var voltaWrap = el("div", { class: "wrap" });
-      voltaWrap.appendChild(renderMiniSection(data.volta, "volta"));
-      main.appendChild(voltaWrap);
-      main.appendChild(el("div", { class: "wrap" }, '<div class="divider"><span class="mark"></span></div>'));
-    }
-
-    if (data.reservas) {
-      var resWrap = el("div", { class: "wrap" });
-      resWrap.appendChild(renderReservas(data.reservas));
-      main.appendChild(resWrap);
-    }
-
-    try {
-      initScrollspy();
-    } catch (e) {
-      /* scrollspy is progressive enhancement; ignore failures */
-    }
-    try {
-      initCountdown();
-    } catch (e) {
-      /* non-critical */
-    }
-    try {
-      initMobileNav();
-    } catch (e) {
-      /* non-critical */
-    }
-  }
-
-  /* ---------- mobile nav ---------- */
-
-  function initMobileNav() {
-    var toggle = document.getElementById("navToggle");
-    var nav = document.getElementById("site-nav");
-    if (!toggle || !nav) return;
-
-    function closeNav() {
-      nav.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
-    }
-    function openNav() {
-      nav.classList.add("open");
-      toggle.setAttribute("aria-expanded", "true");
-    }
-
-    toggle.addEventListener("click", function () {
-      if (nav.classList.contains("open")) closeNav();
-      else openNav();
-    });
-    nav.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") closeNav();
-    });
-    document.addEventListener("click", function (e) {
-      if (!nav.classList.contains("open")) return;
-      if (nav.contains(e.target) || toggle.contains(e.target)) return;
-      closeNav();
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeNav();
-    });
-    window.addEventListener("resize", function () {
-      if (window.innerWidth >= 759) closeNav();
-    });
-  }
-
-  /* ---------- scrollspy ---------- */
-
-  function initScrollspy() {
-    if (typeof IntersectionObserver === "undefined") return;
-    var links = Array.prototype.slice.call(document.querySelectorAll(".site-nav a"));
-    var sections = links
-      .map(function (a) {
-        return document.getElementById(a.getAttribute("href").slice(1));
-      })
-      .filter(Boolean);
-    if (!sections.length) return;
-    var byId = {};
-    links.forEach(function (a) {
-      byId[a.getAttribute("href").slice(1)] = a;
-    });
-    var obs = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            links.forEach(function (a) {
-              a.classList.remove("active");
-            });
-            var link = byId[e.target.id];
-            if (link) link.classList.add("active");
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
-    );
-    sections.forEach(function (s) {
-      obs.observe(s);
-    });
-  }
-
-  /* ---------- countdown ---------- */
-
-  function initCountdown() {
-    var alvo = new Date(2026, 7, 25);
-    var volta = new Date(2026, 8, 9);
-    var hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-    var dias = Math.round((alvo - hoje) / 86400000);
-    var el2 = document.getElementById("cd");
-    if (!el2) return;
-    var txt;
-    if (dias > 1) txt = "Faltam " + dias + " dias";
-    else if (dias === 1) txt = "É amanhã";
-    else if (dias === 0) txt = "É hoje!";
-    else if (hoje <= volta) txt = "Na Espanha agora";
-    else txt = "España 2026";
-    el2.textContent = txt;
+    buildChrome();
+    initGestures();
+    window.addEventListener("hashchange", route);
+    var wide = window.matchMedia("(min-width:900px)");
+    var onWide = function () { if (state.route === "day") renderDay(); };
+    if (wide.addEventListener) wide.addEventListener("change", onWide);
+    else if (wide.addListener) wide.addListener(onWide);
+    route();
   }
 
   document.addEventListener("DOMContentLoaded", main);
