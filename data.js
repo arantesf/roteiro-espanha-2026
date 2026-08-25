@@ -1967,6 +1967,16 @@ var ITINERARY = {
    ]
   },
   {
+   "title": "Seguro viagem",
+   "small_html": "Apólice contratada e guardada no OneDrive. Salve o PDF offline no celular e anote o telefone de assistência 24h antes de embarcar.",
+   "docs": [
+    {
+     "label": "Apólice e assistência",
+     "href": "https://1drv.ms/f/c/dfc0e3ec82870a78/IgBBSzICSCwgSYmpf-KB7lNVASXUQDRZjbANRDcVV5I9Fx8?e=XOCM0s"
+    }
+   ]
+  },
+  {
    "title": "Ingressos que esgotam semanas antes",
    "small_html": "Real Alcázar · Sagrada Família · Park Güell · Casa Batlló. Comprar somente nos sites oficiais.",
    "docs": []
@@ -2005,6 +2015,12 @@ var ITINERARY = {
  "reservas": {
   "note_html": "<span class=\"h\">Sobre esta página pública</span>Códigos de reserva e PINs foram ocultados aqui de propósito — os comprovantes completos estão numa pasta privada do OneDrive, acessível pelos links desta página.",
   "rows": [
+   {
+    "data": "25/8–9/9",
+    "trecho": "Seguro viagem · toda a viagem",
+    "codigo": "····",
+    "arquivo_html": "<a href=\"https://1drv.ms/f/c/dfc0e3ec82870a78/IgBBSzICSCwgSYmpf-KB7lNVASXUQDRZjbANRDcVV5I9Fx8?e=XOCM0s\" target=\"_blank\">abrir pasta</a>"
+   },
    {
     "data": "25/8",
     "trecho": "CNF → GRU → Madrid · Iberia",
